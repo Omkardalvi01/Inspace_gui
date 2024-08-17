@@ -1,0 +1,31 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    color: #FFFFFF;
+    background-color: #dee3f9;
+}
+.heading_container{
+    display: flex;
+    justify-content: space-around;
+}
+.teamdetails{
+    display: flex;
+    width: 55%;
+    height: 10vh;
+    background-color: #478CCF;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 3%;
+}
+.timer, .packetcounter{
+    text-align: center;
+    border-radius: 30px;
+    height: 10vh;
+    width: 20%;
+    background-color: #478CCF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
