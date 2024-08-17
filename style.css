@@ -29,3 +29,6 @@ body{
     align-items: center;
     justify-content: center;
 }
+.logo{
+    border-radius: 100%;
+}
