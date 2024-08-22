@@ -37,21 +37,19 @@ body{
 }
 .datapoints_container{
     width: 65%;
-    padding: 5em 0;
     margin: 0 1em;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 }
 .datapoints{
-    font-size: 1em;
-    height: 14vh;
+    height: 17vh;
     width: 15vw;
     background-color: #478CCF;
     border-radius: 10px;
-    margin: 0.8em 0;
+    margin: 1.5vh 0;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-around;
 }
 .dataval{
     color: black;
@@ -59,20 +57,19 @@ body{
     margin: 0 0.8em;
     border-radius: 20px ;
     text-align: center;
-    height: 3em;
+    max-height: 3em;
 }
 .dataval h1{
     margin: 0.3em;
 }
 .dataques{
-    padding: 0;
-    margin: 0.2em 0.2em;
+    padding: 0 0.2em;
+    margin: 0.2em 0.4em;
     margin-bottom: 0;
 }
 .datapoints button{
     margin: 0 0.8em;
     border-radius: 20px ;
-    text-align: center;
     height: 2.2em;
     font-size: 1.3em;
 }
@@ -84,5 +81,9 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 2.8em;
+    max-height: 2.8em;
+}
+.test{
+    padding-top: 5em;
+    display: flex;
 }
