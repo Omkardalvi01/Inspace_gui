@@ -2,15 +2,18 @@
     box-sizing: border-box;
 }
 body{
+    padding-top: 0;
     color: #FFFFFF;
     background-color: #dee3f9;
 }
 .heading_container{
+    top: 0;
     position: fixed;
     width: 100%;
     display: flex;
     justify-content: space-around;
     background-color: #dee3f9;
+    padding-bottom:0.6rem ;
 }
 .teamdetails{
     display: flex;
@@ -44,7 +47,7 @@ body{
 .datapoints{
     height: 17vh;
     width: 15vw;
-    background-color: #478CCF;
+    background-color: rgba( 71, 140, 207, 0.7);
     border-radius: 10px;
     margin: 1.5vh 0;
     display: flex;
@@ -86,4 +89,14 @@ body{
 .test{
     padding-top: 5em;
     display: flex;
+}
+.graph_container{
+    width: 65%;
+    display: flex;
+    color: black;
+    justify-content: space-around;
+    margin: 0 1%;
+}
+.graph_container img{
+    max-height: 38vh;
 }
