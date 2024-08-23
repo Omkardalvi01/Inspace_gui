@@ -106,14 +106,37 @@
     
         </div>
         <br>
-    <div class="efg">i
-        <div class="nav">
-            <a  class='xyz' href="#home"><img src="/on.png" alt="lhome" class="homelogo"></a>
-            <a href="#home"><img src="/reset.png" alt="lhome" class="homelogo"></a>
-            <a href="#home"><img src="/pau.png" alt="lhome" class="homelogo"></a>
-            <a href="#home"><img src="/play.png" alt="lhome" class="homelogo"></a>
+        <div class="efg">i
+            <div class="nav">
+                <a  class='xyz' href="#home"><img src="/on.png" alt="lhome" class="homelogo"></a>
+                <a href="#home"><img src="/reset.png" alt="lhome" class="homelogo"></a>
+                <a href="#home"><img src="/pau.png" alt="lhome" class="homelogo"></a>
+                <a href="#home"><img src="/play.png" alt="lhome" class="homelogo"></a>
             </div>
+        </div>
+
+        <div id="command-interface">
+            <div style="background-color: #73A5DB; padding: 10px; border-radius: 10px; width: 100%; margin: 0;  ">
+                <div id="command-history">
+                    <p>&lt;1000&gt;,CX,&lt;ON&gt;</p>
+                    <p>&lt;1000&gt;,CAL,&lt;ON&gt;</p>
+                </div>
+                <div id="command-input">
+                    <input type="text" placeholder="Command...">
+                </div>
             </div>
+            <div id="flowchart">
+                <div class="state">Boot</div>
+                <div class="state">TEST_MODE</div>
+                <div class="state">LAUNCH_PAD</div>
+                <div class="state">ASCENT</div>
+                <div class="state active">ROCKET_DEPLOY</div>
+                <div class="state">DESCENT</div>
+                <div class="state">AEROBRAKE_RELEASE</div>
+                <div class="state">IMPACT</div>
+            </div>
+        </div>
+        
      </div>
     </div>
     
@@ -159,7 +182,7 @@
     </style>
 </head>
 <body>
-    <table>
+    <table style="color: black;">
         
         <tr>
             <th>Header 1</th>
