@@ -102,9 +102,9 @@
             <div class="abc"> 
                 <div class="nav">
                     <a  class='xyz' href="#home"><img src="/home.png" alt="lhome" class="homelogo"></a>
-                    <a href="#home"><img src="/graph.png" alt="lhome" class="homelogo"></a>
-                    <a href="#home"><img src="/gps.png" alt="lhome" class="homelogo"></a>
-                    <a href="#home"><img src="/csv.png" alt="lhome" class="homelogo"></a>
+                    <a href="#home"><img src="/graph.png" alt="graph" class="homelogo"></a>
+                    <a href="#home"><img src="/gps.png" alt="gps" class="homelogo"></a>
+                    <a href="#home"><img src="/csv.png" alt="csv" class="homelogo"></a>
             
                 </div>
             </div>
@@ -117,10 +117,21 @@
                     <a href="#home"><img src="/play.png" alt="lhome" class="homelogo"></a>
                 </div>
             </div>
+            <div id="command-interface">
+                <div style="background-color: #73A5DB; padding: 10px; border-radius: 10px; width: 100%; margin: 0;  ">
+                    <div id="command-history">
+                        <p>&lt;1000&gt;,CX,&lt;ON&gt;</p>
+                        <p>&lt;1000&gt;,CAL,&lt;ON&gt;</p>
+                    </div>
+                    <div id="command-input">
+                        <input type="text" placeholder="Command...">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     
-    <div class="graph_container">
+    <div class="graph_container" id="graph">
         <div class="colum1">
             <div class="Altitude">
                 <h1>Altitude</h1>
@@ -149,7 +160,9 @@
                 <canvas class="Altitude"></canvas>
             </div>
         </div>
-    </div>            
+    </div>      
+    
+
    <script src="script.js"></script>
 </body>
 </html>
