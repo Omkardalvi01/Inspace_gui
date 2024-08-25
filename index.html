@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <div class="heading_container">
         <div class="teamdetails">
             <img src="https://media-exp1.licdn.com/dms/image/C4D0BAQH44RIzI8xEHg/company-logo_200_200/0/1579280652217?e=2159024400&v=beta&t=620Tzp0d3dPVRo4dApJREZbC5q5Pr_axDJrWCn6-Zlk" alt="team logo" class="logo">
@@ -97,403 +98,58 @@
                 </div>
             </div>  
         </div>
-    <div class="abc"> 
-        <div class="nav">
-            <a  class='xyz' href="#home"><img src="/home.png" alt="lhome" class="homelogo"></a>
-            <a href="#home"><img src="/graph.png" alt="lhome" class="homelogo"></a>
-            <a href="#home"><img src="/gps.png" alt="lhome" class="homelogo"></a>
-            <a href="#home"><img src="/csv.png" alt="lhome" class="homelogo"></a>
-    
-        </div>
-        <br>
-        <div class="efg">i
-            <div class="nav">
-                <a  class='xyz' href="#home"><img src="/on.png" alt="lhome" class="homelogo"></a>
-                <a href="#home"><img src="/reset.png" alt="lhome" class="homelogo"></a>
-                <a href="#home"><img src="/pau.png" alt="lhome" class="homelogo"></a>
-                <a href="#home"><img src="/play.png" alt="lhome" class="homelogo"></a>
-            </div>
-        </div>
-
-        <div id="command-interface">
-            <div style="background-color: #73A5DB; padding: 10px; border-radius: 10px; width: 100%; margin: 0;  ">
-                <div id="command-history">
-                    <p>&lt;1000&gt;,CX,&lt;ON&gt;</p>
-                    <p>&lt;1000&gt;,CAL,&lt;ON&gt;</p>
-                </div>
-                <div id="command-input">
-                    <input type="text" placeholder="Command...">
+        <div class="right_side_cont">
+            <div class="abc"> 
+                <div class="nav">
+                    <a  class='xyz' href="#home"><img src="/home.png" alt="lhome" class="homelogo"></a>
+                    <a href="#home"><img src="/graph.png" alt="lhome" class="homelogo"></a>
+                    <a href="#home"><img src="/gps.png" alt="lhome" class="homelogo"></a>
+                    <a href="#home"><img src="/csv.png" alt="lhome" class="homelogo"></a>
+            
                 </div>
             </div>
-            <div id="flowchart">
-                <div class="state">Boot</div>
-                <div class="state">TEST_MODE</div>
-                <div class="state">LAUNCH_PAD</div>
-                <div class="state">ASCENT</div>
-                <div class="state active">ROCKET_DEPLOY</div>
-                <div class="state">DESCENT</div>
-                <div class="state">AEROBRAKE_RELEASE</div>
-                <div class="state">IMPACT</div>
+            <br>
+            <div class="efg">i
+                <div class="nav">
+                    <a  class='xyz' href="#home"><img src="/on.png" alt="lhome" class="homelogo"></a>
+                    <a href="#home"><img src="/reset.png" alt="lhome" class="homelogo"></a>
+                    <a href="#home"><img src="/pau.png" alt="lhome" class="homelogo"></a>
+                    <a href="#home"><img src="/play.png" alt="lhome" class="homelogo"></a>
+                </div>
             </div>
         </div>
-        
-     </div>
     </div>
     
     <div class="graph_container">
-    <div class="colum1">
-        <div class="Altitude">
-            <h1>Altitude</h1>
-            <img src="graph.jpg" alt="graph">
+        <div class="colum1">
+            <div class="Altitude">
+                <h1>Altitude</h1>
+                <canvas class="Altitude"></canvas>
+            </div>
+            <div class="Pressure">
+                <h1>Pressure</h1>
+                <canvas class="Altitude"></canvas>
+            </div>
+            <div class="Temperature">
+                <h1>Temperature</h1>
+                <canvas class="Altitude"></canvas>
+            </div>
         </div>
-        <div class="Pressure">
-            <h1>Pressure</h1>
-            <img src="graph.jpg" alt="graph">
-        </div>
-        <div class="Temperature">
-            <h1>Temperature</h1>
-            <img src="graph.jpg" alt="graph">
-        </div>
-    </div>
-        <div class="colum2">
+        <div class="column2">
             <div class="Gyro_Spin_Rate">
                 <h1>Gyro Spin Rate</h1>
-                <img src="graph.jpg" alt="graph">
+                <canvas class="Altitude"></canvas>
             </div>
             <div class="Voltage">
                 <h1>Voltage</h1>
-                <img src="graph.jpg" alt="graph">
+                <canvas class="Altitude"></canvas>
             </div>
             <div class="3d_Graph">
                 <h1>3D Grpah</h1>
-                <img src="3D-grpah.jpg" alt="graph">
+                <canvas class="Altitude"></canvas>
             </div>
         </div>
-   </div>
-   <title>15x15 Table</title>
-    <style>
-        table, th, td {
-            
-            border: 1px solid black;
-            border-collapse: collapse;
-            text-align: center;
-            padding: 8px;
-        }
-    </style>
-</head>
-<body>
-    <table style="color: black;">
-        
-        <tr>
-            <th>Header 1</th>
-            <th>Header 2</th>
-            <th>Header 3</th>
-            <th>Header 4</th>
-            <th>Header 5</th>
-            <th>Header 6</th>
-            <th>Header 7</th>
-            <th>Header 8</th>
-            <th>Header 9</th>
-            <th>Header 10</th>
-            <th>Header 11</th>
-            <th>Header 12</th>
-            <th>Header 13</th>
-            <th>Header 14</th>
-            <th>Header 15</th>
-        </tr>
-        
-        <tr>
-            <td>1,1</td>
-            <td>1,2</td>
-            <td>1,3</td>
-            <td>1,4</td>
-            <td>1,5</td>
-            <td>1,6</td>
-            <td>1,7</td>
-            <td>1,8</td>
-            <td>1,9</td>
-            <td>1,10</td>
-            <td>1,11</td>
-            <td>1,12</td>
-            <td>1,13</td>
-            <td>1,14</td>
-            <td>1,15</td>
-        </tr>
-        
-        <tr>
-            <td>2,1</td>
-            <td>2,2</td>
-            <td>2,3</td>
-            <td>2,4</td>
-            <td>2,5</td>
-            <td>2,6</td>
-            <td>2,7</td>
-            <td>2,8</td>
-            <td>2,9</td>
-            <td>2,10</td>
-            <td>2,11</td>
-            <td>2,12</td>
-            <td>2,13</td>
-            <td>2,14</td>
-            <td>2,15</td>
-        </tr>
-        <tr>
-            <td>2,1</td>
-            <td>2,2</td>
-            <td>2,3</td>
-            <td>2,4</td>
-            <td>2,5</td>
-            <td>2,6</td>
-            <td>2,7</td>
-            <td>2,8</td>
-            <td>2,9</td>
-            <td>2,10</td>
-            <td>2,11</td>
-            <td>2,12</td>
-            <td>2,13</td>
-            <td>2,14</td>
-            <td>2,15</td>
-        </tr>
-        <tr>
-            <td>2,1</td>
-            <td>2,2</td>
-            <td>2,3</td>
-            <td>2,4</td>
-            <td>2,5</td>
-            <td>2,6</td>
-            <td>2,7</td>
-            <td>2,8</td>
-            <td>2,9</td>
-            <td>2,10</td>
-            <td>2,11</td>
-            <td>2,12</td>
-            <td>2,13</td>
-            <td>2,14</td>
-            <td>2,15</td>
-        </tr>
-        <tr>
-            <td>2,1</td>
-            <td>2,2</td>
-            <td>2,3</td>
-            <td>2,4</td>
-            <td>2,5</td>
-            <td>2,6</td>
-            <td>2,7</td>
-            <td>2,8</td>
-            <td>2,9</td>
-            <td>2,10</td>
-            <td>2,11</td>
-            <td>2,12</td>
-            <td>2,13</td>
-            <td>2,14</td>
-            <td>2,15</td>
-        </tr>
-        <tr>
-            <td>2,1</td>
-            <td>2,2</td>
-            <td>2,3</td>
-            <td>2,4</td>
-            <td>2,5</td>
-            <td>2,6</td>
-            <td>2,7</td>
-            <td>2,8</td>
-            <td>2,9</td>
-            <td>2,10</td>
-            <td>2,11</td>
-            <td>2,12</td>
-            <td>2,13</td>
-            <td>2,14</td>
-            <td>2,15</td>
-        </tr>
-        <tr>
-            <td>2,1</td>
-            <td>2,2</td>
-            <td>2,3</td>
-            <td>2,4</td>
-            <td>2,5</td>
-            <td>2,6</td>
-            <td>2,7</td>
-            <td>2,8</td>
-            <td>2,9</td>
-            <td>2,10</td>
-            <td>2,11</td>
-            <td>2,12</td>
-            <td>2,13</td>
-            <td>2,14</td>
-            <td>2,15</td>
-        </tr>
-        <tr>
-            <td>2,1</td>
-            <td>2,2</td>
-            <td>2,3</td>
-            <td>2,4</td>
-            <td>2,5</td>
-            <td>2,6</td>
-            <td>2,7</td>
-            <td>2,8</td>
-            <td>2,9</td>
-            <td>2,10</td>
-            <td>2,11</td>
-            <td>2,12</td>
-            <td>2,13</td>
-            <td>2,14</td>
-            <td>2,15</td>
-        </tr>
-        <tr>
-            <td>2,1</td>
-            <td>2,2</td>
-            <td>2,3</td>
-            <td>2,4</td>
-            <td>2,5</td>
-            <td>2,6</td>
-            <td>2,7</td>
-            <td>2,8</td>
-            <td>2,9</td>
-            <td>2,10</td>
-            <td>2,11</td>
-            <td>2,12</td>
-            <td>2,13</td>
-            <td>2,14</td>
-            <td>2,15</td>
-        </tr>
-        <tr>
-            <td>2,1</td>
-            <td>2,2</td>
-            <td>2,3</td>
-            <td>2,4</td>
-            <td>2,5</td>
-            <td>2,6</td>
-            <td>2,7</td>
-            <td>2,8</td>
-            <td>2,9</td>
-            <td>2,10</td>
-            <td>2,11</td>
-            <td>2,12</td>
-            <td>2,13</td>
-            <td>2,14</td>
-            <td>2,15</td>
-        </tr>
-        <tr>
-            <td>2,1</td>
-            <td>2,2</td>
-            <td>2,3</td>
-            <td>2,4</td>
-            <td>2,5</td>
-            <td>2,6</td>
-            <td>2,7</td>
-            <td>2,8</td>
-            <td>2,9</td>
-            <td>2,10</td>
-            <td>2,11</td>
-            <td>2,12</td>
-            <td>2,13</td>
-            <td>2,14</td>
-            <td>2,15</td>
-        </tr>
-        <tr>
-            <td>2,1</td>
-            <td>2,2</td>
-            <td>2,3</td>
-            <td>2,4</td>
-            <td>2,5</td>
-            <td>2,6</td>
-            <td>2,7</td>
-            <td>2,8</td>
-            <td>2,9</td>
-            <td>2,10</td>
-            <td>2,11</td>
-            <td>2,12</td>
-            <td>2,13</td>
-            <td>2,14</td>
-            <td>2,15</td>
-        </tr>
-        <tr>
-            <td>2,1</td>
-            <td>2,2</td>
-            <td>2,3</td>
-            <td>2,4</td>
-            <td>2,5</td>
-            <td>2,6</td>
-            <td>2,7</td>
-            <td>2,8</td>
-            <td>2,9</td>
-            <td>2,10</td>
-            <td>2,11</td>
-            <td>2,12</td>
-            <td>2,13</td>
-            <td>2,14</td>
-            <td>2,15</td>
-        </tr>
-        <tr>
-            <td>2,1</td>
-            <td>2,2</td>
-            <td>2,3</td>
-            <td>2,4</td>
-            <td>2,5</td>
-            <td>2,6</td>
-            <td>2,7</td>
-            <td>2,8</td>
-            <td>2,9</td>
-            <td>2,10</td>
-            <td>2,11</td>
-            <td>2,12</td>
-            <td>2,13</td>
-            <td>2,14</td>
-            <td>2,15</td>
-        </tr>
-        <tr>
-            <td>2,1</td>
-            <td>2,2</td>
-            <td>2,3</td>
-            <td>2,4</td>
-            <td>2,5</td>
-            <td>2,6</td>
-            <td>2,7</td>
-            <td>2,8</td>
-            <td>2,9</td>
-            <td>2,10</td>
-            <td>2,11</td>
-            <td>2,12</td>
-            <td>2,13</td>
-            <td>2,14</td>
-            <td>2,15</td>
-        </tr>
-        <tr>
-            <td>2,1</td>
-            <td>2,2</td>
-            <td>2,3</td>
-            <td>2,4</td>
-            <td>2,5</td>
-            <td>2,6</td>
-            <td>2,7</td>
-            <td>2,8</td>
-            <td>2,9</td>
-            <td>2,10</td>
-            <td>2,11</td>
-            <td>2,12</td>
-            <td>2,13</td>
-            <td>2,14</td>
-            <td>2,15</td>
-        </tr>
-       
-        <tr>
-            <td>15,1</td>
-            <td>15,2</td>
-            <td>15,3</td>
-            <td>15,4</td>
-            <td>15,5</td>
-            <td>15,6</td>
-            <td>15,7</td>
-            <td>15,8</td>
-            <td>15,9</td>
-            <td>15,10</td>
-            <td>15,11</td>
-            <td>15,12</td>
-            <td>15,13</td>
-            <td>15,14</td>
-            <td>15,15</td>
-        </tr>
-    </table>
-   
+    </div>            
+   <script src="script.js"></script>
 </body>
 </html>
