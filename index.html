@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arya</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-2.34.0.min.js" charset="utf-8"></script>
 </head>
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <div class="heading_container">
         <div class="teamdetails">
-            <img src="https://media-exp1.licdn.com/dms/image/C4D0BAQH44RIzI8xEHg/company-logo_200_200/0/1579280652217?e=2159024400&v=beta&t=620Tzp0d3dPVRo4dApJREZbC5q5Pr_axDJrWCn6-Zlk" alt="team logo" class="logo">
+            <img style="height: 98%;" src="https://media-exp1.licdn.com/dms/image/C4D0BAQH44RIzI8xEHg/company-logo_200_200/0/1579280652217?e=2159024400&v=beta&t=620Tzp0d3dPVRo4dApJREZbC5q5Pr_axDJrWCn6-Zlk" alt="team logo" class="logo">
             <h1>Team ID:0000</h1>
             <img src="https://media.istockphoto.com/id/519611160/vector/flag-of-india.jpg?s=612x612&w=0&k=20&c=0HueaQHkdGC4Fw87s3DbeTE9Orv3mqHRLce88LV47E4=" alt="indian flag" class="flag">
         </div>
@@ -23,10 +23,10 @@
     </div>
     <div class="test">
         <div class="datapoints_container">
-            <div class="datapoints" id="mode">
+            <div class="datapoints">
                 <h1 class="dataques">Mode:</h1>
                 <div class="dataval">
-                    <h1>FLIGHT</h1>
+                    <h1  id="mode">FLIGHT</h1>
                 </div>
             </div>
             <div class="datapoints" id="sats">
@@ -68,8 +68,8 @@
                 </div>
             </div>  
             <div class="datapoints" id="sim">
-                <button>SIM_ENABLE</button>
-                <button>SIM_DISABLE</button>
+                <button id="s_enable" onclick="simulation_e()">SIM_ENABLE</button>
+                <button id="s_disable" onclick="simulation_d()">SIM_DISABLE</button>
             </div>
             <div class="datapoints" id="GynoSpinRate">
                 <h1 class="dataques">Gyno Spin:</h1>
@@ -121,32 +121,32 @@
     </div>
     
     <div class="graph_container">
-        <div class="colum1">
+        <div class="colum1" style="width: 45%;">
             <div class="Altitude">
                 <h1>Altitude</h1>
-                <canvas class="Altitude"></canvas>
+                <div class="graph" id="Altitude"></div>
             </div>
             <div class="Pressure">
                 <h1>Pressure</h1>
-                <canvas class="Altitude"></canvas>
+                <div class="graph" id="Pressure"></div>
             </div>
             <div class="Temperature">
                 <h1>Temperature</h1>
-                <canvas class="Altitude"></canvas>
+                <div class="graph" id="Temperature"></div>
             </div>
         </div>
-        <div class="column2">
+        <div class="column2" style="width: 48%;">
             <div class="Gyro_Spin_Rate">
                 <h1>Gyro Spin Rate</h1>
-                <canvas class="Altitude"></canvas>
+                <div class="graph" id="Gyro_Spin_Rate"></div>
             </div>
             <div class="Voltage">
                 <h1>Voltage</h1>
-                <canvas class="Altitude"></canvas>
+                <div class="graph" id="Voltage"></div>
             </div>
             <div class="3d_Graph">
                 <h1>3D Grpah</h1>
-                <canvas class="Altitude"></canvas>
+                <div class="graph" id="myPlot"></div>
             </div>
         </div>
     </div>            
