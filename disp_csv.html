@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Display</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #A4C7E3;
+            margin: 0;
+            padding: 10px;
+            color : black;
+        }
+
+        .container {
+            margin-top: 4vh;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            overflow-y: auto; /* Make the container scrollable */
+        }
+
+        /* Alternating row colors */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table tr:nth-child(even) {
+            color: black;
+            background-color: #E0EDF7; /* Light blue for even rows */
+        }
+
+        table tr:nth-child(odd) {
+            columns: black;
+            background-color: #F2F2F2; /* Light gray for odd rows */
+        }
+
+        table th, table td {
+            padding: 5px; /* Smaller padding */
+            border: 1px solid #4675A4;
+            text-align: center;
+            font-size: 0.8em; /* Smaller font size */
+        }
+
+    </style>
+</head>
+<body>
+
+
+    <div id="csv-data" class="container"></div>
+
+    <script>
+        async function fetchData() {
+            const response = await fetch('dummy_cansat_data.csv');
+            const data = await response.text();
+            displayCSV(data);
+        }
+
+        function displayCSV(data) {
+            const rows = data.split('\n');
+            let content = '<table border="1">';
+            
+            rows.forEach((row, index) => {
+                const cols = row.split(',');
+                if (index === 0) {
+                    content += '<tr>';
+                    cols.forEach(col => content += `<th>${col}</th>`);
+                    content += '</tr>';
+                } else {
+                    content += '<tr>';
+                    cols.forEach(col => content += `<td>${col}</td>`);
+                    content += '</tr>';
+                }
+            });
+
+            content += '</table>';
+            document.getElementById('csv-data').innerHTML = content;
+        }
+
+        fetchData();
+    </script>
+</body>
+</html>
