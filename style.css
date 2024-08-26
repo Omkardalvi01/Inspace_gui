@@ -43,6 +43,7 @@ body{
 }
 .datapoints_container{
     width: 85%;
+    height: 40vh;
     margin: 0 1em;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -90,9 +91,14 @@ body{
     justify-content: center;
     max-height: 2.8em;
 }
+.flowchart{
+    height: 40vh;
+    background-color: black;
+}
 .test{
-    padding-top: 5em;
+    padding-top: 5.5em;
     display: flex;
+    height: 100vh;
 }
 .graph_container{
     width: 100%;
@@ -110,12 +116,12 @@ body{
     z-index: 1;
 }
 .right_side_cont{
+    margin-top: 0;
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;   
 }
-
 .abc{
-    margin-top: 1em;
     display: flex;
 }
 .efg{
@@ -148,8 +154,9 @@ body{
 
 #command-interface {
     background-color: #DEE3F9;
-    padding: 20px;
     border-radius: 10px;
+    width: 100%;
+
 }
 #command-history {
     background-color: #73A5DB;
@@ -171,38 +178,3 @@ body{
     border: 2px solid #73A5DB;
     font-size: 16px;
 }
-#flowchart {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    gap: 20px;
-    background-color: #DEE3F9;
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
-}
-.state {
-    background-color: #d0c8c8;
-    padding: 10px;
-    border-radius: 5px;
-    color: #333;
-    font-weight: bold;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.state.active {
-    background-color: #2b8823;
-    color: white;
-}
-/* Grid placements */
-.state:nth-child(1) { grid-area: 1 / 1; } /* Boot */
-.state:nth-child(2) { grid-area: 2 / 1; } /* TEST_MODE */
-.state:nth-child(3) { grid-area: 3 / 1; } /* LAUNCH_PAD */
-.state:nth-child(4) { grid-area: 4 / 1; } /* ASCENT */
-.state:nth-child(5) { grid-area: 4 / 2; } /* ROCKET_DEPLOY */
-.state:nth-child(6) { grid-area: 3 / 2; } /* DESCENT */
-.state:nth-child(7) { grid-area: 2 / 2; } /* AEROBRAKE_RELEASE */
-.state:nth-child(8) { grid-area: 1 / 2; } /* IMPACT */
