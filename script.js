@@ -22,7 +22,7 @@ let layout = {
     height : 430,
     width : 820
 }
-Plotly.newPlot('Altitude',data, layout, {responsive: true})
+Plotly.newPlot('Altitude',data, {responsive: true})
 Plotly.newPlot('Pressure',data, {responsive: true})
 Plotly.newPlot('Temperature',data, {responsive: true})
 Plotly.newPlot('Gyro_Spin_Rate',data, {responsive: true})
