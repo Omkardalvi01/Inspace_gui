@@ -6,20 +6,14 @@
     <title>CSV Display</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #A4C7E3;
-            margin: 0;
-            padding: 10px;
-            color : black;
-        }
 
-        .container {
-            margin-top: 4vh;
+        .csv-container {
+            margin-top: 15vh;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
             overflow-y: auto; /* Make the container scrollable */
+            color: black;
         }
 
         /* Alternating row colors */
@@ -29,28 +23,51 @@
         }
 
         table tr:nth-child(even) {
-            color: black;
+
             background-color: #E0EDF7; /* Light blue for even rows */
         }
 
         table tr:nth-child(odd) {
-            columns: black;
             background-color: #F2F2F2; /* Light gray for odd rows */
         }
 
-        table th, table td {
+        table th {
+            padding: 5px; /* Smaller padding */
+            border: 1px solid #4675A4;
+            text-align: center;
+            font-size: 0.9em; /* Smaller font size */
+        }
+        table td {
             padding: 5px; /* Smaller padding */
             border: 1px solid #4675A4;
             text-align: center;
             font-size: 0.8em; /* Smaller font size */
         }
-
+        a{
+            text-decoration: none;
+        }
+        
     </style>
 </head>
-<body>
+<body >
+    
+    <div class="heading_container">
+        <div class="teamdetails">
+            <a href="index.html">
+                <img style="height: 98%;" src="https://media-exp1.licdn.com/dms/image/C4D0BAQH44RIzI8xEHg/company-logo_200_200/0/1579280652217?e=2159024400&v=beta&t=620Tzp0d3dPVRo4dApJREZbC5q5Pr_axDJrWCn6-Zlk" alt="team logo" class="logo">
+            </a>
+            <h1>Team ID:0000</h1>
+            <img src="https://media.istockphoto.com/id/519611160/vector/flag-of-india.jpg?s=612x612&w=0&k=20&c=0HueaQHkdGC4Fw87s3DbeTE9Orv3mqHRLce88LV47E4=" alt="indian flag" class="flag">
+        </div>
+        <div class="timer">
+            <h1>Mission Time:<br>00:00:00</h1>
+        </div>
+        <div class="packetcounter">
+            <h1>Packet Count:<br>0</h1>
+        </div>
+    </div>
 
-
-    <div id="csv-data" class="container"></div>
+    <div id="csv-data" class="csv-container"></div>
 
     <script>
         async function fetchData() {
