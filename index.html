@@ -164,6 +164,62 @@
             </div>
         </div>
         <div class="column2" style="width: 48%;">
+            <div class="3d_Graph">
+                <h1>3D Grpah</h1>
+                <div class="graph" id="myPlot">
+                    <div id="trajectory-plot" style="width: 100%; height: 100%;"></div>
+
+                        <script>
+                            async function fetchData() {
+                                const response = await fetch('dummy_cansat_data.csv');
+                                const data = await response.text();
+                                const rows = data.split('\n').slice(1); // Skip the header row
+                                const latitudes = [];
+                                const longitudes = [];
+                                const altitudes = [];
+
+                                rows.forEach(row => {
+                                    const cols = row.split(',');
+                                    latitudes.push(parseFloat(cols[7]));  // GNSS_LATITUDE
+                                    longitudes.push(parseFloat(cols[8])); // GNSS_LONGITUDE
+                                    altitudes.push(parseFloat(cols[9]));  // GNSS_ALTITUDE
+                                });
+
+                                return { latitudes, longitudes, altitudes };
+                            }
+
+                            async function plotTrajectory() {
+                                const { latitudes, longitudes, altitudes } = await fetchData();
+
+                                const trace = {
+                                    x: longitudes,
+                                    y: latitudes,
+                                    z: altitudes,
+                                    mode: 'lines',
+                                    type: 'scatter3d',
+                                    line: {
+                                        width: 6,
+                                        color: 'blue',
+                                        colorscale: 'Viridis'
+                                    }
+                                };
+
+                                const layout = {
+                                    title: '3D Trajectory of CanSat',
+                                    scene: {
+                                        xaxis: { title: 'Longitude' },
+                                        yaxis: { title: 'Latitude' },
+                                        zaxis: { title: 'Altitude' }
+                                    }
+                                };
+
+                                Plotly.newPlot('trajectory-plot', [trace], layout);
+                            }
+
+                            plotTrajectory();
+                        </script>
+                </div>
+            </div>
             <div class="Gyro_Spin_Rate">
                 <h1>Gyro Spin Rate</h1>
                 <div class="graph" id="Gyro_Spin_Rate"></div>
@@ -172,13 +228,14 @@
                 <h1>Voltage</h1>
                 <div class="graph" id="Voltage"></div>
             </div>
-            <div class="3d_Graph">
-                <h1>3D Grpah</h1>
-                <div class="graph" id="myPlot"></div>
-            </div>
+
         </div>
-    </div>      
-    
+    </div> 
+   
+    <div id="map" style="height: 600px; margin: 20px;">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4280.5246599211105!2d72.83458961128292!3d19.10750808202891!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c9c65184a307%3A0x2f4568f3f924ca4c!2sDwarkadas%20Jivanlal%20Sanghvi%20College%20Of%20Engineering%2C%20Navpada%2C%20Suvarna%20Nagar%2C%20Vile%20Parle%20West%2C%20Mumbai%2C%20Maharashtra%20400056!5e1!3m2!1sen!2sin!4v1724742463443!5m2!1sen!2sin" width="100%" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+ 
 
    <script src="script.js"></script>
 </body>
