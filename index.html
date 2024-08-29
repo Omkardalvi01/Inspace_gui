@@ -123,55 +123,78 @@
                     <div class="graph" id="myPlot">
                         <div id="trajectory-plot" style="width: 100%; height: 100%;"></div>
             
-                            <script>
-                                async function fetchData() {
-                                    const response = await fetch('test.csv');
-                                    const data = await response.text();
-                                    const rows = data.split('\n').slice(1); // Skip the header row
-                                    const latitudes = [];
-                                    const longitudes = [];
-                                    const altitudes = [];
-            
-                                    rows.forEach(row => {
-                                        const cols = row.split(',');
-                                        latitudes.push(parseFloat(cols[7]));  // GNSS_LATITUDE
-                                        longitudes.push(parseFloat(cols[8])); // GNSS_LONGITUDE
-                                        altitudes.push(parseFloat(cols[9]));  // GNSS_ALTITUDE
+                        <script>
+                            let latitudes = [];
+                            let longitudes = [];
+                            let altitudes = [];
+                            let currentIndex = 0;
+
+                            async function fetchData() {
+                                const response = await fetch('test.csv');
+                                const data = await response.text();
+                                const rows = data.split('\n').slice(1); // Skip the header row
+
+                                rows.forEach(row => {
+                                    const cols = row.split(',');
+                                    latitudes.push(parseFloat(cols[14]));  // GPS_LATITUDE
+                                    longitudes.push(parseFloat(cols[15])); // GPS_LONGITUDE
+                                    altitudes.push(parseFloat(cols[13]));  // GPS_ALTITUDE
+                                });
+                            }
+
+                            function plotInitialTrajectory() {
+                                const trace = {
+                                    x: [longitudes[0]],
+                                    y: [latitudes[0]],
+                                    z: [altitudes[0]],
+                                    mode: 'lines',
+                                    type: 'scatter3d',
+                                    line: {
+                                        width: 6,
+                                        color: 'blue',
+                                        colorscale: 'Viridis'
+                                    }
+                                };
+
+                                const layout = {
+                                    title: '3D Trajectory of CanSat',
+                                    scene: {
+                                        xaxis: { title: 'Longitude' },
+                                        yaxis: { title: 'Latitude' },
+                                        zaxis: { title: 'Altitude' }
+                                    }
+                                };
+
+                                Plotly.newPlot('trajectory-plot', [trace], layout);
+                            }
+
+                            function updateTrajectory() {
+                                if (currentIndex < latitudes.length - 1) {
+                                    currentIndex++;
+                                    Plotly.extendTraces('trajectory-plot', {
+                                        x: [[longitudes[currentIndex]]],
+                                        y: [[latitudes[currentIndex]]],
+                                        z: [[altitudes[currentIndex]]]
+                                    }, [0]);
+
+                                    // Optionally, you can auto-adjust the axis range to fit the new data point
+                                    Plotly.relayout('trajectory-plot', {
+                                        'scene.xaxis.autorange': true,
+                                        'scene.yaxis.autorange': true,
+                                        'scene.zaxis.autorange': true
                                     });
-            
-                                    return { latitudes, longitudes, altitudes };
                                 }
-            
-                                async function plotTrajectory() {
-                                    const { latitudes, longitudes, altitudes } = await fetchData();
-            
-                                    const trace = {
-                                        x: longitudes,
-                                        y: latitudes,
-                                        z: altitudes,
-                                        mode: 'lines',
-                                        type: 'scatter3d',
-                                        line: {
-                                            width: 6,
-                                            color: 'blue',
-                                            colorscale: 'Viridis'
-                                        }
-                                    };
-            
-                                    const layout = {
-                                        title: '3D Trajectory of CanSat',
-                                        scene: {
-                                            xaxis: { title: 'Longitude' },
-                                            yaxis: { title: 'Latitude' },
-                                            zaxis: { title: 'Altitude' }
-                                        }
-                                    };
-            
-                                    Plotly.newPlot('trajectory-plot', [trace], layout);
-                                }
-            
-                                plotTrajectory();
-                            </script>
+                            }
+
+                            async function startPlotting() {
+                                await fetchData();
+                                plotInitialTrajectory();
+                                setInterval(updateTrajectory, 1000); // Update the plot every second
+                            }
+
+                            startPlotting();
+
+                        </script>
                     </div>
                 </div>
                 <div class="Gyro_Spin_Rate_container">
