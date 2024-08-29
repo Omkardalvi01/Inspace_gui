@@ -12,36 +12,35 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
-            overflow-y: auto; /* Make the container scrollable */
+            overflow-y: auto; 
             color: black;
         }
 
-        /* Alternating row colors */
-        table {
+          table {
             width: 100%;
             border-collapse: collapse;
         }
 
         table tr:nth-child(even) {
 
-            background-color: #E0EDF7; /* Light blue for even rows */
+            background-color: #E0EDF7; 
         }
 
         table tr:nth-child(odd) {
-            background-color: #F2F2F2; /* Light gray for odd rows */
+            background-color: #F2F2F2; 
         }
 
         table th {
-            padding: 5px; /* Smaller padding */
+            padding: 5px; 
             border: 1px solid #4675A4;
             text-align: center;
-            font-size: 0.9em; /* Smaller font size */
+            font-size: 0.9em; 
         }
         table td {
-            padding: 5px; /* Smaller padding */
+            padding: 5px; 
             border: 1px solid #4675A4;
             text-align: center;
-            font-size: 0.8em; /* Smaller font size */
+            font-size: 0.8em; 
         }
         a{
             text-decoration: none;
@@ -67,34 +66,40 @@
         </div>
     </div>
 
-    <div id="csv-data" class="csv-container"></div>
+    <div id="csv-data" class="csv-container" style="font-size: 0.95em;"></div>
 
     <script>
+        let rows = [];
+        let currentIndex = 0;
+
         async function fetchData() {
-            const response = await fetch('dummy_cansat_data.csv');
+            const response = await fetch('test.csv');
             const data = await response.text();
-            displayCSV(data);
+            rows = data.split('\n');
+            displayCSVHeader();
+            setInterval(displayNextRow, 1000); // Update the table every second
         }
 
-        function displayCSV(data) {
-            const rows = data.split('\n');
-            let content = '<table border="1">';
-            
-            rows.forEach((row, index) => {
-                const cols = row.split(',');
-                if (index === 0) {
-                    content += '<tr>';
-                    cols.forEach(col => content += `<th>${col}</th>`);
-                    content += '</tr>';
-                } else {
-                    content += '<tr>';
-                    cols.forEach(col => content += `<td>${col}</td>`);
-                    content += '</tr>';
-                }
-            });
-
-            content += '</table>';
+        function displayCSVHeader() {
+            const headerRow = rows[0].split(',');
+            let content = '<table border="1"><tr>';
+            headerRow.forEach(col => content += `<th>${col}</th>`);
+            content += '</tr></table>';
             document.getElementById('csv-data').innerHTML = content;
+        }
+
+        function displayNextRow() {
+            if (currentIndex < rows.length - 2)  //made -2 as ek extra row aa raha tha
+            {
+                currentIndex++;
+                const row = rows[currentIndex].split(',');
+                let content = document.getElementById('csv-data').innerHTML;
+                content = content.replace('</table>', ''); // Remove the closing table tag
+                content += '<tr>';
+                row.forEach(col => content += `<td>${col}</td>`);
+                content += '</tr></table>'; // Add the closing table tag back
+                document.getElementById('csv-data').innerHTML = content;
+            }
         }
 
         fetchData();
