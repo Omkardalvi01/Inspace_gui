@@ -130,12 +130,7 @@ body{
     transform: translateX(15%);
 }
 
-.row {
-    display: flex;
-    justify-content: space-between;
-    width: 60%;
-    margin-bottom: 10px;
-}
+
 
 .box {
     display: flex;
@@ -144,8 +139,9 @@ body{
     background-color: #888888;
     color: white;
     font-size: 1.2em;
-    width: 150px;
-    height: 50px;
+    width: auto;
+    height: auto;
+    padding: 10px;
     border-radius: 10px;
     text-align: center;
     margin: 5px;
@@ -229,7 +225,7 @@ body{
     background-color: #DEE3F9;
     border-radius: 10px;
     width: 100%;
-    margin-top: 15px;
+    margin-top: 5px;
 }
 #command-history {
     background-color: #73A5DB;
