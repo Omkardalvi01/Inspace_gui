@@ -64,6 +64,13 @@
         <div class="packetcounter">
             <h1>Packet Count:<br>0</h1>
         </div>
+        <div class="nav_cont"> 
+            <div class="nav">
+                <a  class='xyz' href="index.html"><img src="/home.png" alt="lhome" class="homelogo"></a>
+                <a href="#graph"><img src="/graph.png" alt="graph" class="homelogo"></a>
+                <a href="disp_csv.html"><img src="/csv.png" alt="csv" class="homelogo"></a>
+            </div>
+        </div>
     </div>
 
     <div id="csv-data" class="csv-container" style="font-size: 0.95em;"></div>
@@ -77,7 +84,7 @@
             const data = await response.text();
             rows = data.split('\n');
             displayCSVHeader();
-            setInterval(displayNextRow, 1000); // Update the table every second
+            setInterval(displayNextRow, 1000); 
         }
 
         function displayCSVHeader() {
@@ -89,15 +96,15 @@
         }
 
         function displayNextRow() {
-            if (currentIndex < rows.length - 2)  //made -2 as ek extra row aa raha tha
+            if (currentIndex < rows.length - 2)  
             {
                 currentIndex++;
                 const row = rows[currentIndex].split(',');
                 let content = document.getElementById('csv-data').innerHTML;
-                content = content.replace('</table>', ''); // Remove the closing table tag
+                content = content.replace('</table>', ''); 
                 content += '<tr>';
                 row.forEach(col => content += `<td>${col}</td>`);
-                content += '</tr></table>'; // Add the closing table tag back
+                content += '</tr></table>'; 
                 document.getElementById('csv-data').innerHTML = content;
             }
         }

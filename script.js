@@ -95,42 +95,42 @@ var interval = setInterval(() => {
     y: [[rand()]]
   }, [0])
 
-  fetch('test.csv')
-  .then(response => response.text())
-  .then(text => {
-    Papa.parse(text, {
-      header: true,
-      dynamicTyping: true,
-      complete: (results) => {
-        results.data.forEach(row => {
-          altarr.push(row['ALTITUDE']);
-          prearr.push(row['PRESSURE']);
-          latarr.push(row['GPS_LATITUDE']);
-          longarr.push(row['GPS_LONGITUDE']);
-          spdarr.push(row['AIR_SPEED']);
-          vltarr.push(row['VOLTAGE']);
-          satsarr.push(row['GPS_SATS'])
-          statearr.push(row["STATE"])
-          timearr.push(row['MISSION_TIME'])
-          packet_arr.push(row['PACKET_COUNT'])
-        });
-
-        alt.textContent = altarr[cnt] + "m"
-        pre.textContent = prearr[cnt] + "bar"
-        vlt.textContent = vltarr[cnt] + "V"
-        lat.textContent = latarr[cnt] + "°"
-        long.textContent = longarr[cnt] + "°"
-        sp.textContent = spdarr[cnt] + "m/s"
-        sats.textContent = satsarr[cnt]
-        state.textContent =  stateconv(statearr[cnt])
-        time.textContent = "Mission Time: \n" + timearr[cnt]
-        packets.textContent = "Packet Count: \n" + packet_arr[cnt]
-      }
-    });
-  })
+fetch('test.csv')
+.then(response => response.text())
+.then(text => {
+  Papa.parse(text, {
+    header: true,
+    dynamicTyping: true,
+    complete: (results) => {
+      results.data.forEach(row => {
+        altarr.push(row['ALTITUDE']);
+        prearr.push(row['PRESSURE']);
+        latarr.push(row['GPS_LATITUDE']);
+        longarr.push(row['GPS_LONGITUDE']);
+        spdarr.push(row['AIR_SPEED']);
+        vltarr.push(row['VOLTAGE']);
+        satsarr.push(row['GPS_SATS'])
+        statearr.push(row["STATE"])
+        timearr.push(row['MISSION_TIME'])
+        packet_arr.push(row['PACKET_COUNT'])
+        console.log(row)
+      });
+      alt.textContent = altarr[cnt] + "m"
+      pre.textContent = prearr[cnt] + "bar"
+      vlt.textContent = vltarr[cnt] + "V"
+      lat.textContent = latarr[cnt] + "°"
+      long.textContent = longarr[cnt] + "°"
+      sp.textContent = spdarr[cnt] + "m/s"
+      sats.textContent = satsarr[cnt]
+      state.textContent =  stateconv(statearr[cnt])
+      time.textContent = "Mission Time: \n" + timearr[cnt]
+      packets.textContent = "Packet Count: \n" + packet_arr[cnt]
+    }
+  });
+})
 .catch(error => console.error('Error fetching CSV:', error));
 
-  if(++cnt === 36) clearInterval(interval);
+if(++cnt === 36) clearInterval(interval);
 }, 1000);
 
 

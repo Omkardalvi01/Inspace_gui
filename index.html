@@ -21,6 +21,13 @@
         <div class="packetcounter">
             <h1 id="pack_count">Packet Count:</h1>
         </div>
+        <div class="nav_cont"> 
+            <div class="nav">
+                <a  class='xyz' href="#home"><img src="/home.png" alt="lhome" class="homelogo"></a>
+                <a href="#graph"><img src="/graph.png" alt="graph" class="homelogo"></a>
+                <a href="disp_csv.html"><img src="/csv.png" alt="csv" class="homelogo"></a>
+            </div>
+        </div>
     </div>
     <div class="test">
         <div class="leftside_cont">
@@ -101,11 +108,54 @@
                         </div>
                     </div>
                 </div>
-                <div id="map" style="height: auto; width: 60%;  z-index: 999; margin-top: 1%;">
+                <div id="map" style="height: auto; width: 45%;  z-index: 999; margin-top: 1%;">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4280.5246599211105!2d72.83458961128292!3d19.10750808202891!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c9c65184a307%3A0x2f4568f3f924ca4c!2sDwarkadas%20Jivanlal%20Sanghvi%20College%20Of%20Engineering%2C%20Navpada%2C%20Suvarna%20Nagar%2C%20Vile%20Parle%20West%2C%20Mumbai%2C%20Maharashtra%20400056!5e1!3m2!1sen!2sin!4v1724742463443!5m2!1sen!2sin" width="100%" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
+                <div class="right_side_cont">
+                    
+                    <div class="efg">
+                        <div class="button_cont">
+                            <a href="#home"><img src="/on.png" alt="lhome" class="homelogo"></a>
+                            <a href="#home"><img src="/reset.png" alt="lhome" class="homelogo"></a>
+                            <a href="#home"><img src="/pau.png" alt="lhome" class="homelogo"></a>
+                            <a href="#home"><img src="/play.png" alt="lhome" class="homelogo"></a>
+                        </div>
+                    </div>
+                    <div id="command-interface">
+                        <div style="background-color: #73A5DB; padding: 10px; border-radius: 10px; width: 100%; margin: 0;  ">
+                            <div id="command-history">
+                                <p>&lt;1000&gt;,CX,&lt;ON&gt;</p>
+                                <p>&lt;1000&gt;,CAL,&lt;ON&gt;</p>
+                            </div>
+                            <div id="command-input">
+                                <input type="text" placeholder="Command...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flowchart">
+                        <div class="row">
+                            <div class="box">Boot</div>
+                            <div class="box">IMPACT</div>
+                        </div>
+                        <div class="row">
+                            <div class="box">TEST MODE</div>
+                            <div class="box">AEROBRAKE RELEASE</div>
+                        </div>
+                        <div class="row">
+                            <div class="box">LAUNCH PAD</div>
+                            <div class="box">DESCENT</div>
+                        </div>
+                        <div class="row">
+                            <div class="box">ASCENT</div>
+                            <div class="box highlighted">ROCKET DEPLOY</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="graph_container">
+            
+        </div>
+        <div class="graph_container">
+            <div class="g_column1">
                 <div class="Pressure_container">
                     <h1>Pressure</h1>
                     <div class="graph" id="Pressure"></div>
@@ -118,6 +168,8 @@
                     <h1>Temperature</h1>
                     <div class="graph" id="Temperature"></div>
                 </div>
+            </div>
+            <div class="g_column2">
                 <div class="3d_Graph_container">
                     <h1>3D Graph</h1>
                     <div class="graph" id="myPlot">
@@ -128,12 +180,12 @@
                             let longitudes = [];
                             let altitudes = [];
                             let currentIndex = 0;
-
+    
                             async function fetchData() {
                                 const response = await fetch('test.csv');
                                 const data = await response.text();
                                 const rows = data.split('\n').slice(1); // Skip the header row
-
+    
                                 rows.forEach(row => {
                                     const cols = row.split(',');
                                     latitudes.push(parseFloat(cols[14]));  // GPS_LATITUDE
@@ -141,7 +193,7 @@
                                     altitudes.push(parseFloat(cols[13]));  // GPS_ALTITUDE
                                 });
                             }
-
+    
                             function plotInitialTrajectory() {
                                 const trace = {
                                     x: [longitudes[0]],
@@ -155,7 +207,7 @@
                                         colorscale: 'Viridis'
                                     }
                                 };
-
+    
                                 const layout = {
                                     title: '3D Trajectory of CanSat',
                                     scene: {
@@ -164,10 +216,10 @@
                                         zaxis: { title: 'Altitude' }
                                     }
                                 };
-
+    
                                 Plotly.newPlot('trajectory-plot', [trace], layout);
                             }
-
+    
                             function updateTrajectory() {
                                 if (currentIndex < latitudes.length - 1) {
                                     currentIndex++;
@@ -176,7 +228,7 @@
                                         y: [[latitudes[currentIndex]]],
                                         z: [[altitudes[currentIndex]]]
                                     }, [0]);
-
+    
                                     // Optionally, you can auto-adjust the axis range to fit the new data point
                                     Plotly.relayout('trajectory-plot', {
                                         'scene.xaxis.autorange': true,
@@ -185,15 +237,15 @@
                                     });
                                 }
                             }
-
+    
                             async function startPlotting() {
                                 await fetchData();
                                 plotInitialTrajectory();
                                 setInterval(updateTrajectory, 1000); // Update the plot every second
                             }
-
+    
                             startPlotting();
-
+    
                         </script>
                     </div>
                 </div>
@@ -207,56 +259,8 @@
                 </div>
             </div>
         </div>
-        
            
-        <div class="right_side_cont">
-            <div class="abc"> 
-                <div class="nav">
-                    <a  class='xyz' href="#home"><img src="/home.png" alt="lhome" class="homelogo"></a>
-                    <a href="#graph"><img src="/graph.png" alt="graph" class="homelogo"></a>
-                    <a href="#map"><img src="/gps.png" alt="gps" class="homelogo"></a>
-                    <a href="disp_csv.html"><img src="/csv.png" alt="csv" class="homelogo"></a>
-            
-                </div>
-            </div>
-            <div class="efg">i
-                <div class="nav">
-                    <a  class='xyz' href="#home"><img src="/on.png" alt="lhome" class="homelogo"></a>
-                    <a href="#home"><img src="/reset.png" alt="lhome" class="homelogo"></a>
-                    <a href="#home"><img src="/pau.png" alt="lhome" class="homelogo"></a>
-                    <a href="#home"><img src="/play.png" alt="lhome" class="homelogo"></a>
-                </div>
-            </div>
-            <div id="command-interface">
-                <div style="background-color: #73A5DB; padding: 10px; border-radius: 10px; width: 100%; margin: 0;  ">
-                    <div id="command-history">
-                        <p>&lt;1000&gt;,CX,&lt;ON&gt;</p>
-                        <p>&lt;1000&gt;,CAL,&lt;ON&gt;</p>
-                    </div>
-                    <div id="command-input">
-                        <input type="text" placeholder="Command...">
-                    </div>
-                </div>
-            </div>
-            <div class="flowchart">
-                <div class="row">
-                    <div class="box">Boot</div>
-                    <div class="box">IMPACT</div>
-                </div>
-                <div class="row">
-                    <div class="box">TEST MODE</div>
-                    <div class="box">AEROBRAKE RELEASE</div>
-                </div>
-                <div class="row">
-                    <div class="box">LAUNCH PAD</div>
-                    <div class="box">DESCENT</div>
-                </div>
-                <div class="row">
-                    <div class="box">ASCENT</div>
-                    <div class="box highlighted">ROCKET DEPLOY</div>
-                </div>
-            </div>
-        </div>
+        
     </div>
 
    <script src="script.js"></script>
