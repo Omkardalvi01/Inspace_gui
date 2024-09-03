@@ -34,9 +34,9 @@ function stateconv(a) {
   } else if (a == 4) {
     return "ASCENT";
   } else if (a == 5) {
-    return "DEPLOYED";
+    return "ROCKET_D";
   } else if (a == 6) {
-    return "AEROBRAKE";
+    return "AEROBRAKE_R";
   } else if (a == 7) {
     return "IMPACT";
   } else {
@@ -100,6 +100,7 @@ Plotly.newPlot('Gyro_Spin_Rate', gyroData, layout);
 Plotly.newPlot('Voltage', voltData, layout);
 
 let cnt = 0;
+let interval= null;
 
 async function fetchData() {
   const response = await fetch('test.csv');
@@ -151,4 +152,8 @@ async function startPlotting() {
   setInterval(plotTrajectory, 1000); // Update the plot every second
 }
 
-startPlotting();
+document.getElementById('on').addEventListener('click', () => {
+  if (!interval) {
+      startPlotting();
+  }
+});
