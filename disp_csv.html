@@ -59,10 +59,10 @@
             <img src="https://media.istockphoto.com/id/519611160/vector/flag-of-india.jpg?s=612x612&w=0&k=20&c=0HueaQHkdGC4Fw87s3DbeTE9Orv3mqHRLce88LV47E4=" alt="indian flag" class="flag">
         </div>
         <div class="timer">
-            <h1>Mission Time:<br>00:00:00</h1>
+            <h1 id="time">Mission Time:<br>00:00:00</h1>
         </div>
         <div class="packetcounter">
-            <h1>Packet Count:<br>0</h1>
+            <h1 id="pack_count">Packet Count:<br>0</h1>
         </div>
         <div class="nav_cont"> 
             <div class="nav">
@@ -100,6 +100,10 @@
             {
                 currentIndex++;
                 const row = rows[currentIndex].split(',');
+                const missionTime = row[1]
+                const packetCount = row[2]
+                document.getElementById('time').textContent = `Mission Time:\n${missionTime}`;
+                document.getElementById('pack_count').textContent = `Packet Count:\n${packetCount}`;
                 let content = document.getElementById('csv-data').innerHTML;
                 content = content.replace('</table>', ''); 
                 content += '<tr>';
@@ -108,8 +112,9 @@
                 document.getElementById('csv-data').innerHTML = content;
             }
         }
-
         fetchData();
+        
     </script>
+    <script src="script.js"></script>
 </body>
 </html>
