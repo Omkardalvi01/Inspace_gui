@@ -34,9 +34,9 @@ function stateconv(a) {
   } else if (a == 4) {
     return "ASCENT";
   } else if (a == 5) {
-    return "DEPLOYED";
+    return "ROCKET_D";
   } else if (a == 6) {
-    return "AEROBRAKE";
+    return "AEROBRAKE_R";
   } else if (a == 7) {
     return "IMPACT";
   } else {
@@ -104,20 +104,20 @@ let cnt = 0;
 async function fetchData() {
   const response = await fetch('test.csv');
   const data = await response.text();
-  const rows = data.split('\n').slice(1); // Skip the header row
+  const rows = data.split('\n').slice(1); 
 
   rows.forEach(row => {
     const cols = row.split(',');
-    altarr.push(parseFloat(cols[5]));  // ALTITUDE
-    prearr.push(parseFloat(cols[11])); // PRESSURE
-    latarr.push(parseFloat(cols[14])); // GPS_LATITUDE
-    longarr.push(parseFloat(cols[15])); // GPS_LONGITUDE
-    spdarr.push(parseFloat(cols[6]));  // AIR_SPEED
-    vltarr.push(parseFloat(cols[10])); // VOLTAGE
-    satsarr.push(parseInt(cols[16]));  // GPS_SATS
-    statearr.push(parseInt(cols[4]));  // STATE
-    timearr.push(cols[1]);             // MISSION_TIME
-    packet_arr.push(parseInt(cols[2])); // PACKET_COUNT
+    altarr.push(parseFloat(cols[5])); 
+    prearr.push(parseFloat(cols[11])); 
+    latarr.push(parseFloat(cols[14])); 
+    longarr.push(parseFloat(cols[15])); 
+    spdarr.push(parseFloat(cols[6]));  
+    vltarr.push(parseFloat(cols[10])); 
+    satsarr.push(parseInt(cols[16])); 
+    statearr.push(parseInt(cols[4]));  
+    timearr.push(cols[1]);            
+    packet_arr.push(parseInt(cols[2])); 
   });
 }
 
@@ -148,7 +148,7 @@ function plotTrajectory() {
 
 async function startPlotting() {
   await fetchData();
-  setInterval(plotTrajectory, 1000); // Update the plot every second
+  setInterval(plotTrajectory, 1000); 
 }
 
 startPlotting();
