@@ -100,6 +100,7 @@ Plotly.newPlot('Gyro_Spin_Rate', gyroData, layout);
 Plotly.newPlot('Voltage', voltData, layout);
 
 let cnt = 0;
+let interval= null;
 
 async function fetchData() {
   const response = await fetch('test.csv');
@@ -151,4 +152,8 @@ async function startPlotting() {
   setInterval(plotTrajectory, 1000); 
 }
 
-startPlotting();
+document.getElementById('on').addEventListener('click', () => {
+  if (!interval) {
+      startPlotting();
+  }
+});
