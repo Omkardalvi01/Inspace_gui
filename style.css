@@ -4,7 +4,8 @@
 body{
     padding-top: 0;
     color: #FFFFFF;
-    background-color: #dee3f9;
+    background: linear-gradient(135deg, #d6ddfd, #bbc1fc);
+
 }
 .heading_container{
     top: 0;
@@ -13,7 +14,7 @@ body{
     width: 100%;
     display: flex;
     justify-content: space-around;
-    background-color: #dee3f9;
+    background: linear-gradient(135deg, #d6ddfd, #bbc1fc);
     padding-bottom:0.6rem ;
     font-size: 1.2em;
     z-index: 1000;
@@ -57,7 +58,7 @@ body{
     justify-content: space-around;
 }
 .logo{
-    border-radius: 100%;
+    border-radius: 0%;
 }
 .leftside_cont{
     width: 100%;
@@ -126,8 +127,7 @@ body{
     padding: 5px;
     border-radius: 10px;
     margin-top: 10px;
-    width: 70%;
-    transform: translateX(15%);
+    width: 100%;
 }
 
 
@@ -193,7 +193,7 @@ body{
 
 .efg{
     display: flex;
-    margin-top: 15px;
+    margin-top: 0px;
     background-color: #478CCF; 
     border-radius: 10px;
 }
@@ -201,7 +201,7 @@ body{
 .button_cont{
     padding: 0;
     background-color: #478CCF; 
-    height: 10vh;
+    height: vh;
     width: 25vw;
     border-radius: 10px;
     margin: 0;
@@ -220,6 +220,13 @@ body{
     background-color: #478CCF;
 }
 
+
+.clickclick{
+    height: 5vh;
+    width: auto;
+    margin: 1vh 1vb;
+    background-color: #478CCF;
+}
 
 #command-interface {
     background-color: #DEE3F9;
@@ -250,5 +257,4 @@ body{
 ::-webkit-scrollbar {
     display: none;
 }
-
 
