@@ -10,6 +10,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
 </head>
 <body>
     <div class="heading_container">
@@ -125,8 +131,10 @@
                     </div>
                 </div>
                 
-                <div id="map" style="height: auto; width: 45%;  z-index: 999; margin-top: 1%;">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4280.5246599211105!2d72.83458961128292!3d19.10750808202891!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c9c65184a307%3A0x2f4568f3f924ca4c!2sDwarkadas%20Jivanlal%20Sanghvi%20College%20Of%20Engineering%2C%20Navpada%2C%20Suvarna%20Nagar%2C%20Vile%20Parle%20West%2C%20Mumbai%2C%20Maharashtra%20400056!5e1!3m2!1sen!2sin!4v1724742463443!5m2!1sen!2sin" width="100%" height="84%;" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <div id="map&flow" style="height: 80vh; width: 45%;  z-index: 999; margin-top: 1%; display: flex; flex-direction: column;">
+                    <div class="map-cont" style="height: 100%;">
+                        <div id="map" style="height: 100%;"></div>
+                    </div>
                     <div class="flowchart">
                         <div class="" style="display: flex;">
                             <div class="box" id="boot">Boot</div>

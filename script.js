@@ -26,6 +26,12 @@ const timearr = [];
 const packet_arr = [];
 const tiltx = [];
 const tilty = [];
+const map = L.map('map').setView([19.2105, 72.8242], 10);
+let marker = L.marker([0,0]).addTo(map);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
 
 function stateconv(a) {
   if (a == 1) {
@@ -167,8 +173,9 @@ function plotTrajectory() {
     state.textContent = stateconv(statearr[cnt]);
     time.textContent = "Mission Time: \n" + timearr[cnt];
     packets.textContent = "Packet Count: \n" + packet_arr[cnt];
-    tilt.textContent = `${tiltx[cnt]}° , ${tilty[cnt]}°`
-
+    tilt.textContent = `${tiltx[cnt]}° , ${tilty[cnt]}°`;
+    map.setView([latarr[cnt],longarr[cnt]], 10)
+    marker.setLatLng([latarr[cnt],longarr[cnt]])
     cnt++;
   } else {
     clearInterval(interval);
