@@ -12,6 +12,7 @@ const sats = document.getElementById("sats");
 const state = document.getElementById("state");
 const time = document.getElementById("time");
 const packets = document.getElementById("pack_count");
+const tilt = document.getElementById("tilt")
 
 const altarr = [];
 const prearr = [];
@@ -23,23 +24,43 @@ const satsarr = [];
 const statearr = [];
 const timearr = [];
 const packet_arr = [];
+const tiltx = [];
+const tilty = [];
 
 function stateconv(a) {
   if (a == 1) {
+    document.getElementById('boot').classList.add("boxhighlighted")
     return "Boot";
   } else if (a == 2) {
+    document.getElementById('boot').classList.remove("boxhighlighted")
+    document.getElementById('test').classList.add("boxhighlighted")
     return "Test Mode";
   } else if (a == 3) {
+    document.getElementById('test').classList.remove("boxhighlighted")
+    document.getElementById('launch').classList.add("boxhighlighted")
     return "LAUNCH PAD";
   } else if (a == 4) {
+    document.getElementById('launch').classList.remove("boxhighlighted")
+    document.getElementById('ascent').classList.add("boxhighlighted")
     return "ASCENT";
   } else if (a == 5) {
+    document.getElementById('ascent').classList.remove("boxhighlighted")
+    document.getElementById('rocket_d').classList.add("boxhighlighted")
     return "ROCKET_D";
   } else if (a == 6) {
-    return "AEROBRAKE_R";
+    document.getElementById('rocket_d').classList.remove("boxhighlighted")
+    document.getElementById('descent').classList.add("boxhighlighted")
+    return "DESCENT";
   } else if (a == 7) {
+    document.getElementById('descent').classList.remove("boxhighlighted")
+    document.getElementById('aerobrake').classList.add("boxhighlighted")
+    return "AEROBRAKE_R";
+  } else if(a == 8){
+    document.getElementById('aerobrake').classList.remove("boxhighlighted")
+    document.getElementById('impact').classList.add("boxhighlighted")
     return "IMPACT";
-  } else {
+  } 
+  else {
     return "NO";
   }
 }
@@ -88,16 +109,20 @@ let voltData = [{
   line: { color: 'rgb(139,0,139)' }
 }];
 
-let layout = {
-  height: 430,
-  width: 820
-};
+function createLayout(yAxisTitle) {
+  return {
+    height: 430,
+    width: 820,
+    xaxis: { title: 'TIME' },
+    yaxis: { title: yAxisTitle }
+  };
+}
 
-Plotly.newPlot('Altitude', altData, layout);
-Plotly.newPlot('Pressure', preData, layout);
-Plotly.newPlot('Temperature', tempData, layout);
-Plotly.newPlot('Gyro_Spin_Rate', gyroData, layout);
-Plotly.newPlot('Voltage', voltData, layout);
+Plotly.newPlot('Altitude', altData, createLayout('Altitude'));
+Plotly.newPlot('Pressure', preData, createLayout('Pressure'));
+Plotly.newPlot('Temperature', tempData, createLayout('Temperature'));
+Plotly.newPlot('Gyro_Spin_Rate', gyroData, createLayout('Gyro Spin Rate'));
+Plotly.newPlot('Voltage', voltData, createLayout('Voltage'));
 
 let cnt = 0;
 let interval= null;
@@ -117,7 +142,9 @@ async function fetchData() {
     vltarr.push(parseFloat(cols[10])); 
     satsarr.push(parseInt(cols[16])); 
     statearr.push(parseInt(cols[4]));  
-    timearr.push(cols[1]);            
+    timearr.push(cols[1]);  
+    tiltx.push(parseFloat(cols[17]));
+    tilty.push(parseFloat(cols[18]));          
     packet_arr.push(parseInt(cols[2])); 
   });
 }
@@ -132,7 +159,7 @@ function plotTrajectory() {
 
     alt.textContent = altarr[cnt] + "m";
     pre.textContent = prearr[cnt] + "bar";
-    vlt.textContent = vltarr[cnt] + "V";
+    vlt.textContent = vltarr[cnt] + "V"
     lat.textContent = latarr[cnt] + "°";
     long.textContent = longarr[cnt] + "°";
     sp.textContent = spdarr[cnt] + "m/s";
@@ -140,6 +167,7 @@ function plotTrajectory() {
     state.textContent = stateconv(statearr[cnt]);
     time.textContent = "Mission Time: \n" + timearr[cnt];
     packets.textContent = "Packet Count: \n" + packet_arr[cnt];
+    tilt.textContent = `${tiltx[cnt]}° , ${tilty[cnt]}°`
 
     cnt++;
   } else {

@@ -5,6 +5,11 @@ body{
     padding-top: 0;
     color: #FFFFFF;
     background: linear-gradient(135deg, #d6ddfd, #bbc1fc);
+    font-family: "Roboto Condensed", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 350;
+    font-style: normal;
+
 
 }
 .heading_container{
@@ -136,8 +141,8 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #888888;
-    color: white;
+    background-color: #fdfbd4;
+    color: black;
     font-size: 1.2em;
     width: auto;
     height: auto;
@@ -146,8 +151,8 @@ body{
     text-align: center;
     margin: 5px;
 }
-
-.box.highlighted {
+.boxhighlighted {
+    color: white;
     background-color: #2c8a2c; /* Highlighted color for ROCKET_DEPLOY */
 }
 
