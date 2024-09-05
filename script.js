@@ -12,7 +12,7 @@ const sats = document.getElementById("sats");
 const state = document.getElementById("state");
 const time = document.getElementById("time");
 const packets = document.getElementById("pack_count");
-const tilt = document.getElementById("tilt")
+const tilt = document.getElementById("tilt");
 
 const altarr = [];
 const prearr = [];
@@ -26,6 +26,7 @@ const timearr = [];
 const packet_arr = [];
 const tiltx = [];
 const tilty = [];
+
 const map = L.map('map').setView([19.2105, 72.8242], 10);
 let marker = L.marker([0,0]).addTo(map);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -35,49 +36,48 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 function stateconv(a) {
   if (a == 1) {
-    document.getElementById('boot').classList.add("boxhighlighted")
+    document.getElementById('boot').classList.add("boxhighlighted");
     return "Boot";
   } else if (a == 2) {
-    document.getElementById('boot').classList.remove("boxhighlighted")
-    document.getElementById('test').classList.add("boxhighlighted")
+    document.getElementById('boot').classList.remove("boxhighlighted");
+    document.getElementById('test').classList.add("boxhighlighted");
     return "Test Mode";
   } else if (a == 3) {
-    document.getElementById('test').classList.remove("boxhighlighted")
-    document.getElementById('launch').classList.add("boxhighlighted")
+    document.getElementById('test').classList.remove("boxhighlighted");
+    document.getElementById('launch').classList.add("boxhighlighted");
     return "LAUNCH PAD";
   } else if (a == 4) {
-    document.getElementById('launch').classList.remove("boxhighlighted")
-    document.getElementById('ascent').classList.add("boxhighlighted")
+    document.getElementById('launch').classList.remove("boxhighlighted");
+    document.getElementById('ascent').classList.add("boxhighlighted");
     return "ASCENT";
   } else if (a == 5) {
-    document.getElementById('ascent').classList.remove("boxhighlighted")
-    document.getElementById('rocket_d').classList.add("boxhighlighted")
+    document.getElementById('ascent').classList.remove("boxhighlighted");
+    document.getElementById('rocket_d').classList.add("boxhighlighted");
     return "ROCKET_D";
   } else if (a == 6) {
-    document.getElementById('rocket_d').classList.remove("boxhighlighted")
-    document.getElementById('descent').classList.add("boxhighlighted")
+    document.getElementById('rocket_d').classList.remove("boxhighlighted");
+    document.getElementById('descent').classList.add("boxhighlighted");
     return "DESCENT";
   } else if (a == 7) {
-    document.getElementById('descent').classList.remove("boxhighlighted")
-    document.getElementById('aerobrake').classList.add("boxhighlighted")
+    document.getElementById('descent').classList.remove("boxhighlighted");
+    document.getElementById('aerobrake').classList.add("boxhighlighted");
     return "AEROBRAKE_R";
-  } else if(a == 8){
-    document.getElementById('aerobrake').classList.remove("boxhighlighted")
-    document.getElementById('impact').classList.add("boxhighlighted")
+  } else if (a == 8) {
+    document.getElementById('aerobrake').classList.remove("boxhighlighted");
+    document.getElementById('impact').classList.add("boxhighlighted");
     return "IMPACT";
-  } 
-  else {
+  } else {
     return "NO";
   }
 }
 
 function simulation_e() {
-  SIM_E.style = "background-color: #364591;";
+  SIM_E.style.backgroundColor = "#364591";
   mode.textContent = "SIMULATION";
 }
 
 function simulation_d() {
-  SIM_E.style = "background-color: #FFFFFF;";
+  SIM_E.style.backgroundColor = "#FFFFFF";
   mode.textContent = "FLIGHT";
 }
 
@@ -85,6 +85,7 @@ function rand() {
   return Math.random();
 }
 
+// Initializing Plotly Data Structures
 let altData = [{
   y: [],
   mode: 'lines',
@@ -130,8 +131,34 @@ Plotly.newPlot('Temperature', tempData, createLayout('Temperature'));
 Plotly.newPlot('Gyro_Spin_Rate', gyroData, createLayout('Gyro Spin Rate'));
 Plotly.newPlot('Voltage', voltData, createLayout('Voltage'));
 
+// Initializing 3D Plotly Data Structure
+let trajectoryData = [{
+  x: [],
+  y: [],
+  z: [],
+  mode: 'lines',
+  type: 'scatter3d',
+  line: {
+    width: 6,
+    color: 'blue',
+    colorscale: 'Viridis'
+  }
+}];
+
+let trajectoryLayout = {
+  title: '3D Trajectory of CanSat',
+  scene: {
+    xaxis: { title: 'Longitude' },
+    yaxis: { title: 'Latitude' },
+    zaxis: { title: 'Altitude' }
+  }
+};
+
+Plotly.newPlot('trajectory-plot', trajectoryData, trajectoryLayout);
+
+// Data Plotting and Fetching Logic
 let cnt = 0;
-let interval= null;
+let interval = null;
 
 async function fetchData() {
   const response = await fetch('test.csv');
@@ -163,9 +190,15 @@ function plotTrajectory() {
     Plotly.extendTraces('Gyro_Spin_Rate', { y: [[rand()]] }, [0]); // Assuming Gyro Spin Rate data is not available in CSV
     Plotly.extendTraces('Voltage', { y: [[vltarr[cnt]]] }, [0]);
 
+    Plotly.extendTraces('trajectory-plot', {
+      x: [[longarr[cnt]]],
+      y: [[latarr[cnt]]],
+      z: [[altarr[cnt]]]
+    }, [0]);
+
     alt.textContent = altarr[cnt] + "m";
     pre.textContent = prearr[cnt] + "bar";
-    vlt.textContent = vltarr[cnt] + "V"
+    vlt.textContent = vltarr[cnt] + "V";
     lat.textContent = latarr[cnt] + "°";
     long.textContent = longarr[cnt] + "°";
     sp.textContent = spdarr[cnt] + "m/s";
@@ -174,8 +207,7 @@ function plotTrajectory() {
     time.textContent = "Mission Time: \n" + timearr[cnt];
     packets.textContent = "Packet Count: \n" + packet_arr[cnt];
     tilt.textContent = `${tiltx[cnt]}° , ${tilty[cnt]}°`;
-    map.setView([latarr[cnt],longarr[cnt]], 10)
-    marker.setLatLng([latarr[cnt],longarr[cnt]])
+
     cnt++;
   } else {
     clearInterval(interval);
@@ -184,11 +216,12 @@ function plotTrajectory() {
 
 async function startPlotting() {
   await fetchData();
-  setInterval(plotTrajectory, 1000); 
+  interval = setInterval(plotTrajectory, 1000); 
 }
 
+// Event Listener for Starting the Simulation
 document.getElementById('on').addEventListener('click', () => {
   if (!interval) {
-      startPlotting();
+    startPlotting();
   }
 });
