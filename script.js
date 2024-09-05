@@ -26,6 +26,8 @@ const timearr = [];
 const packet_arr = [];
 const tiltx = [];
 const tilty = [];
+const tempArr = [];
+const gyroArr = [];
 
 const map = L.map('map').setView([19.2105, 72.8242], 10);
 let marker = L.marker([0,0]).addTo(map);
@@ -79,10 +81,6 @@ function simulation_e() {
 function simulation_d() {
   SIM_E.style.backgroundColor = "#FFFFFF";
   mode.textContent = "FLIGHT";
-}
-
-function rand() {
-  return Math.random();
 }
 
 // Initializing Plotly Data Structures
@@ -167,18 +165,20 @@ async function fetchData() {
 
   rows.forEach(row => {
     const cols = row.split(',');
-    altarr.push(parseFloat(cols[5])); 
-    prearr.push(parseFloat(cols[11])); 
-    latarr.push(parseFloat(cols[14])); 
-    longarr.push(parseFloat(cols[15])); 
-    spdarr.push(parseFloat(cols[6]));  
-    vltarr.push(parseFloat(cols[10])); 
-    satsarr.push(parseInt(cols[16])); 
-    statearr.push(parseInt(cols[4]));  
-    timearr.push(cols[1]);  
-    tiltx.push(parseFloat(cols[17]));
-    tilty.push(parseFloat(cols[18]));          
-    packet_arr.push(parseInt(cols[2])); 
+    altarr.push(parseFloat(cols[5])); // ALTITUDE
+    spdarr.push(parseFloat(cols[6])); // AIR_SPEED
+    vltarr.push(parseFloat(cols[10])); // VOLTAGE
+    prearr.push(parseFloat(cols[11])); // PRESSURE
+    latarr.push(parseFloat(cols[14])); // GPS_LATITUDE
+    longarr.push(parseFloat(cols[15])); // GPS_LONGITUDE
+    satsarr.push(parseInt(cols[16])); // GPS_SATS
+    statearr.push(parseInt(cols[4])); // STATE
+    timearr.push(cols[1]); // MISSION_TIME
+    packet_arr.push(parseInt(cols[2])); // PACKET_COUNT
+    tiltx.push(parseFloat(cols[17])); // TILT_X
+    tilty.push(parseFloat(cols[18])); // TILT_Y
+    tempArr.push(parseFloat(cols[9])); // TEMPERATURE
+    gyroArr.push(parseFloat(cols[19])); // ROT_Z (Gyro Spin Rate)
   });
 }
 
@@ -186,8 +186,8 @@ function plotTrajectory() {
   if (cnt < altarr.length) {
     Plotly.extendTraces('Altitude', { y: [[altarr[cnt]]] }, [0]);
     Plotly.extendTraces('Pressure', { y: [[prearr[cnt]]] }, [0]);
-    Plotly.extendTraces('Temperature', { y: [[rand()]] }, [0]); // Assuming Temperature data is not available in CSV
-    Plotly.extendTraces('Gyro_Spin_Rate', { y: [[rand()]] }, [0]); // Assuming Gyro Spin Rate data is not available in CSV
+    Plotly.extendTraces('Temperature', { y: [[tempArr[cnt]]] }, [0]);
+    Plotly.extendTraces('Gyro_Spin_Rate', { y: [[gyroArr[cnt]]] }, [0]);
     Plotly.extendTraces('Voltage', { y: [[vltarr[cnt]]] }, [0]);
 
     Plotly.extendTraces('trajectory-plot', {
