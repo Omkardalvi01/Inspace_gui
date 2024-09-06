@@ -13,6 +13,7 @@ const state = document.getElementById("state");
 const time = document.getElementById("time");
 const packets = document.getElementById("pack_count");
 const tilt = document.getElementById("tilt");
+const cmd_echo = document.getElementById("CMD_ECHO");
 
 const altarr = [];
 const prearr = [];
@@ -246,6 +247,7 @@ function plotTrajectory() {
     time.textContent = "Mission Time: \n" + timearr[cnt];
     packets.textContent = "Packet Count: \n" + packet_arr[cnt];
     tilt.textContent = `${tiltx[cnt]}° , ${tilty[cnt]}°`;
+    cmd_echo.textContent = cmdEchoArr[cnt]; // Update cmd_echo element
 
     // Add a new row to the table
     const tableBody = document.getElementById('csvTable').getElementsByTagName('tbody')[0];
@@ -304,3 +306,66 @@ document.getElementById('resumeBtn').addEventListener('click', () => {
 });
 
 //reset the sim
+
+// Reset the sim
+document.getElementById('resetBtn').addEventListener('click', () => {
+  // Clear the interval
+  clearInterval(interval);
+  interval = null;
+
+  // Clear all data arrays
+  altarr.length = 0;
+  prearr.length = 0;
+  latarr.length = 0;
+  longarr.length = 0;
+  spdarr.length = 0;
+  vltarr.length = 0;
+  satsarr.length = 0;
+  statearr.length = 0;
+  timearr.length = 0;
+  packet_arr.length = 0;
+  tiltx.length = 0;
+  tilty.length = 0;
+  tempArr.length = 0;
+  gyroArr.length = 0;
+  teamIdArr.length = 0;
+  modeArr.length = 0;
+  hsDeployedArr.length = 0;
+  pcDeployedArr.length = 0;
+  gpsTimeArr.length = 0;
+  gpsAltitudeArr.length = 0;
+  cmdEchoArr.length = 0;
+
+  // Clear Plotly data arrays
+  altData[0].y.length = 0;
+  preData[0].y.length = 0;
+  tempData[0].y.length = 0;
+  gyroData[0].y.length = 0;
+  voltData[0].y.length = 0;
+  trajectoryData[0].x.length = 0;
+  trajectoryData[0].y.length = 0;
+  trajectoryData[0].z.length = 0;
+
+  // Reset Plotly graphs
+  Plotly.newPlot('Altitude', altData, createLayout('Altitude'));
+  Plotly.newPlot('Pressure', preData, createLayout('Pressure'));
+  Plotly.newPlot('Temperature', tempData, createLayout('Temperature'));
+  Plotly.newPlot('Gyro_Spin_Rate', gyroData, createLayout('Gyro Spin Rate'));
+  Plotly.newPlot('Voltage', voltData, createLayout('Voltage'));
+  Plotly.newPlot('trajectory-plot', trajectoryData, trajectoryLayout);
+
+  // Clear the table
+  const tableBody = document.getElementById('csvTable').getElementsByTagName('tbody')[0];
+  while (tableBody.firstChild) {
+    tableBody.removeChild(tableBody.firstChild);
+  }
+
+  // Reset the counter
+  cnt = 0;
+
+  // Clear cmd_echo element
+  cmd_echo.textContent = "⠀";
+
+  // Restart plotting
+  startPlotting();
+});
