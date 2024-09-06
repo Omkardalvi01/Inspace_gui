@@ -164,11 +164,11 @@
                     <div id="command-interface">
                         <div style="background-color: #73A5DB; padding: 10px; border-radius: 10px; width: 100%; margin: 0;  ">
                             <div id="command-history">
-                                <p>&lt;1000&gt;,CX,&lt;ON&gt;</p>
-                                <p>&lt;1000&gt;,CAL,&lt;ON&gt;</p>
+                                <div id="commandOutput" class="command-output" style="height: 100px; overflow-y: auto;"></div>
                             </div>
                             <div id="command-input">
-                                <input type="text" placeholder="Command...">
+                                <input type="text" id="inputcommand" placeholder="Command...">
+                                <button id="executeCommand" >Execute</button>
                             </div>
                             <div class="3d_Graph_container" style="height: 100%;">
                                 <h1>3D Graph</h1>

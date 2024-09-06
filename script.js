@@ -384,3 +384,37 @@ document.getElementById('resetBtn').addEventListener('click', () => {
 
   startPlotting();
 });
+
+
+const commandInput = document.getElementById('inputcommand');
+const executeCommandButton = document.getElementById('executeCommand');
+const commandOutput = document.getElementById('commandOutput');
+
+executeCommandButton.addEventListener('click', () => {
+    const command = commandInput.value.trim();
+    handleCommand(command);
+    commandInput.value = ''; 
+});
+
+function handleCommand(command) {
+    let response = '';
+
+    if (command.startsWith('echo ')) {
+        response = command.slice(5); 
+    } else {
+        response = `Unknown command: ${command}`;
+    }
+
+    displayCommandOutput(response);
+}
+
+
+function displayCommandOutput(text) {
+  const commandOutput = document.getElementById('commandOutput');
+  const newCommand = document.createElement('div');
+  newCommand.textContent = text;
+  commandOutput.appendChild(newCommand); // Append new command at the end
+
+  // Auto-scroll to the bottom
+  commandOutput.scrollTop = commandOutput.scrollHeight;
+}
