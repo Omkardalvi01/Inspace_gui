@@ -14,6 +14,9 @@ const time = document.getElementById("time");
 const packets = document.getElementById("pack_count");
 const tilt = document.getElementById("tilt");
 const cmd_echo = document.getElementById("CMD_ECHO");
+const pagecont = document.querySelector(".test")
+const tblcont = document.getElementById("csv-ka-data");
+tblcont.classList.toggle("hidden")
 
 const altarr = [];
 const prearr = [];
@@ -38,7 +41,7 @@ const gpsAltitudeArr = [];
 const cmdEchoArr = [];
 
 const map = L.map('map').setView([19.2105, 72.8242], 10);
-let marker = L.marker([0,0]).addTo(map);
+let marker = L.marker([19.2105, 72.8242]).addTo(map);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -63,16 +66,19 @@ function stateconv(a) {
   } else if (a == 5) {
     document.getElementById('ascent').classList.remove("boxhighlighted");
     document.getElementById('rocket_d').classList.add("boxhighlighted");
+    document.getElementById('pc_deploy').classList.add("boxhighlighted");
     return "ROCKET_D";
   } else if (a == 6) {
     document.getElementById('rocket_d').classList.remove("boxhighlighted");
     document.getElementById('descent').classList.add("boxhighlighted");
     return "DESCENT";
   } else if (a == 7) {
+    document.getElementById('glider').classList.add("boxhighlighted");
     document.getElementById('descent').classList.remove("boxhighlighted");
     document.getElementById('aerobrake').classList.add("boxhighlighted");
     return "AEROBRAKE_R";
   } else if (a == 8) {
+
     document.getElementById('aerobrake').classList.remove("boxhighlighted");
     document.getElementById('impact').classList.add("boxhighlighted");
     return "IMPACT";
@@ -91,6 +97,18 @@ function simulation_d() {
   mode.textContent = "FLIGHT";
 }
 
+function csvtable(){
+  tblcont.classList.remove("hidden")
+  pagecont.classList.add("hidden")
+}
+function home(){
+  tblcont.classList.add("hidden")
+  pagecont.classList.remove("hidden")
+}
+function graph(){
+  tblcont.classList.add("hidden")
+  pagecont.classList.remove("hidden")
+}
 // Initializing Plotly Data Structures
 let altData = [{
   y: [],
@@ -248,6 +266,8 @@ function plotTrajectory() {
     packets.textContent = "Packet Count: \n" + packet_arr[cnt];
     tilt.textContent = `${tiltx[cnt]}° , ${tilty[cnt]}°`;
     cmd_echo.textContent = cmdEchoArr[cnt]; 
+    marker.setLatLng([latarr[cnt],longarr[cnt]]);
+    map.setView([latarr[cnt],longarr[cnt]], 10);
 
     // Add a new row to the table
     const tableBody = document.getElementById('csvTable').getElementsByTagName('tbody')[0];
