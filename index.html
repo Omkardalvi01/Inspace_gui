@@ -90,16 +90,16 @@
                     </div>
                 </div>
                 <div class="column2">
+                    <div class="datapoints" id="sim">
+                        <button id="s_enable" onclick="simulation_e()">SIM_ENABLE</button>
+                        <button id="s_disable" onclick="simulation_d()">SIM_DISABLE</button>
+                    </div>
                     <div class="datapoints" >
                         <h1 class="dataques">Pressure:</h1>
                         <div class="dataval">
                             <h1 id="pressure">0bar</h1>
                         </div>
                     </div>  
-                    <div class="datapoints" id="sim">
-                        <button id="s_enable" onclick="simulation_e()">SIM_ENABLE</button>
-                        <button id="s_disable" onclick="simulation_d()">SIM_DISABLE</button>
-                    </div>
                     <div class="datapoints" >
                         <h1 class="dataques">Gyno Spin:</h1>
                         <div class="dataval">
@@ -118,18 +118,18 @@
                             <h1 id="Long">0°</h1>
                         </div>
                     </div>
+                    <div class="datapoints" >
+                        <h1 class="dataques">TILT(X,Y):</h1>
+                        <div class="dataval">
+                            <h1 id="tilt">(0°,0°)</h1>
+                        </div>
+                    </div>
                     <div class="datapoints" id="landing_mech">
                         <div class="status">
                             <h1>GLIDER</h1>
                         </div>
                         <div class="status">
                             <h1>PC_Deployed</h1>
-                        </div>
-                    </div>
-                    <div class="datapoints" >
-                        <h1 class="dataques">TILT(X,Y):</h1>
-                        <div class="dataval">
-                            <h1 id="tilt">(0°,0°)</h1>
                         </div>
                     </div>
                 </div>

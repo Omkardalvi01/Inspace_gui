@@ -1,7 +1,8 @@
-*{
+* {
     box-sizing: border-box;
 }
-body{
+
+body {
     padding-top: 0;
     color: #FFFFFF;
     background: linear-gradient(135deg, #d6ddfd, #bbc1fc);
@@ -9,10 +10,9 @@ body{
     font-optical-sizing: auto;
     font-weight: 350;
     font-style: normal;
-
-
 }
-.heading_container{
+
+.heading_container {
     top: 0;
     padding-top: 0.5rem;
     position: fixed;
@@ -20,22 +20,23 @@ body{
     display: flex;
     justify-content: space-around;
     background: linear-gradient(135deg, #d6ddfd, #bbc1fc);
-    padding-bottom:0.6rem ;
+    padding-bottom: 0.6rem;
     font-size: 1.2em;
     z-index: 1000;
     padding-right: 1%;
 }
-.teamdetails{
+
+.teamdetails {
     display: flex;
     width: 44%;
     height: 10vh;
     background-color: #478CCF;
     border-radius: 15px;
-    display: flex;
     justify-content: space-between;
     padding: 0 3%;
 }
-.timer, .packetcounter{
+
+.timer, .packetcounter {
     text-align: center;
     border-radius: 15px;
     height: 10vh;
@@ -45,15 +46,17 @@ body{
     align-items: center;
     justify-content: center;
 }
-.nav_cont{
+
+.nav_cont {
     display: flex;
-    background-color: #478CCF; 
+    background-color: #478CCF;
     width: 18%;
     border-radius: 15px;
 }
-.nav{
+
+.nav {
     padding: 0;
-    background-color: #478CCF; 
+    background-color: #478CCF;
     height: 10vh;
     border-radius: 15px;
     width: 100%;
@@ -62,10 +65,12 @@ body{
     flex-direction: row;
     justify-content: space-around;
 }
-.logo{
+
+.logo {
     border-radius: 0%;
 }
-.leftside_cont{
+
+.leftside_cont {
     width: 100%;
     padding: 0;
     margin: 0;
@@ -73,47 +78,59 @@ body{
     flex-direction: column;
     justify-content: space-evenly;
 }
-.datapoints_container{
+
+.datapoints_container {
     width: 100%;
     height: auto;
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
-.datapoints{
+.datapoints {
     font-size: 0.8em;
     height: 10.3vh;
     width: 13vw;
-    background-color: rgba( 71, 140, 207, 0.7);
+    background-color: rgba(71, 140, 207, 0.7);
     border-radius: 10px;
     margin: 1.5vh 0;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 }
-.dataval{
+
+.dataval {
     color: black;
     background-color: #FFFFFF;
     margin: 0 0.8em;
-    border-radius: 20px ;
+    border-radius: 10px;
     text-align: center;
     max-height: 3.1em;
+    min-height: 3.1em;
 }
-.dataval h1{
+
+.dataval h1 {
     margin: 0.15em;
 }
-.dataques{
+
+.dataques {
     padding: 0 0.2em;
     margin: 0.2em 0.4em;
     margin-bottom: 0;
 }
-.datapoints button{
+
+.datapoints button {
     margin: 0 0.8em;
-    border-radius: 20px ;
+    border-radius: 20px;
     height: 2.2em;
     font-size: 1.5em;
 }
-.status{
+
+.datapoints button:hover {
+    background-color: #73dbc1;
+}
+
+.status {
     color: #FFFFFF;
     background-color: #A93434;
     margin: 0 0.8em;
@@ -122,6 +139,7 @@ body{
     align-items: center;
     justify-content: center;
     max-height: 2.8em;
+    border-radius: inherit;
 }
 
 .flowchart {
@@ -134,8 +152,6 @@ body{
     margin-top: 10px;
     width: 100%;
 }
-
-
 
 .box {
     display: flex;
@@ -151,12 +167,13 @@ body{
     text-align: center;
     margin: 5px;
 }
+
 .boxhighlighted {
     color: white;
     background-color: #2c8a2c;
 }
 
-.test{
+.test {
     padding-top: 4em;
     display: flex;
     flex-direction: column;
@@ -165,23 +182,22 @@ body{
     margin-bottom: 0.2em;
     margin-top: 4vh;
 }
-.graph_container{
+
+.graph_container {
     width: 100%;
     color: black;
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
 }
-.g_column1{
+
+.g_column1, .g_column2 {
     display: flex;
     flex-direction: column;
     width: 47%;
 }
-.g_column2{
-    display: flex;
-    flex-direction: column;
-    width: 47%;
-}
-.graph{
+
+.graph {
     padding: 0;
     margin: 0;
     width: 100%;
@@ -189,23 +205,23 @@ body{
     background-color: #FFFFFF;
     z-index: 1;
 }
-.right_side_cont{
+
+.right_side_cont {
     margin-top: 1em;
     display: flex;
     flex-direction: column;
-    /* justify-content: space-evenly;    */
 }
 
-.efg{
+.efg {
     display: flex;
     margin-top: 0px;
-    background-color: #478CCF; 
+    background-color: #478CCF;
     border-radius: 10px;
 }
 
-.button_cont{
+.button_cont {
     padding: 0;
-    background-color: #478CCF; 
+    background-color: #478CCF;
     height: vh;
     width: 25vw;
     border-radius: 10px;
@@ -214,19 +230,20 @@ body{
     flex-direction: row;
     justify-content: space-around;
 }
+
 .nav a.active {
     background-color: #04AA6D;
     color: white;
 }
-.homelogo{
+
+.homelogo {
     height: 8vh;
     width: 4vw;
     margin: 1vh 1vb;
     background-color: #478CCF;
 }
 
-
-.clickclick{
+.clickclick {
     height: 5vh;
     width: 5vh;
     background-color: #478CCF;
@@ -242,6 +259,7 @@ body{
     width: 100%;
     margin-top: 5px;
 }
+
 #command-history {
     background-color: #73A5DB;
     padding: 0px;
@@ -251,11 +269,13 @@ body{
     margin-bottom: 10px;
     width: 100%;
 }
+
 #command-input {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
+
 #command-input input {
     padding: 10px;
     width: 100%;
@@ -267,8 +287,6 @@ body{
 #command-input button {
     padding: 10px;
     border-radius: 5px;
-    /* border: 2px solid #73A5DB; */
-    /* background-color: #73dbc1; */
     color: rgb(0, 0, 0);
     font-size: 16px;
     margin-left: 5px;
@@ -283,50 +301,50 @@ body{
     border: 1px solid #ccc;
     padding: 10px;
     font-family: 'Roboto Condensed', sans-serif;
-    white-space: pre-wrap; /* Preserve whitespace and line breaks */
-    word-wrap: break-word; /* Break long words */
-    height: 60px; /* Set a fixed height */
-    overflow-y: auto; /* Enable vertical scrolling */
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    height: 60px;
+    overflow-y: auto;
     color: black;
     border-radius: 5px;
 }
-
 
 .csv-container {
     margin-top: 2vh;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    overflow-y: auto; 
+    overflow-y: auto;
     color: black;
 }
 
-  table {
+table {
     width: 100%;
     border-collapse: collapse;
 }
 
 table tr:nth-child(even) {
-
-    background-color: #E0EDF7; 
+    background-color: #E0EDF7;
 }
 
 table tr:nth-child(odd) {
-    background-color: #F2F2F2; 
+    background-color: #F2F2F2;
 }
 
 table th {
-    padding: 5px; 
+    padding: 5px;
     border: 1px solid #4675A4;
     text-align: center;
-    font-size: 0.9em; 
+    font-size: 0.9em;
 }
+
 table td {
-    padding: 5px; 
+    padding: 5px;
     border: 1px solid #4675A4;
     text-align: center;
-    font-size: 0.8em; 
+    font-size: 0.8em;
 }
-a{
+
+a {
     text-decoration: none;
 }
