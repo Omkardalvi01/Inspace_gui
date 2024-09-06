@@ -263,3 +263,41 @@ body{
     display: none;
 }
 
+.csv-container {
+    margin-top: 1vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    overflow-y: auto; 
+    color: black;
+}
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table tr:nth-child(even) {
+
+    background-color: #E0EDF7; 
+}
+
+table tr:nth-child(odd) {
+    background-color: #F2F2F2; 
+}
+
+table th {
+    padding: 5px; 
+    border: 1px solid #4675A4;
+    text-align: center;
+    font-size: 0.9em; 
+}
+table td {
+    padding: 5px; 
+    border: 1px solid #4675A4;
+    text-align: center;
+    font-size: 0.8em; 
+}
+a{
+    text-decoration: none;
+}

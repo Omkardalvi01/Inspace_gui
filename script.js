@@ -28,6 +28,13 @@ const tiltx = [];
 const tilty = [];
 const tempArr = [];
 const gyroArr = [];
+const teamIdArr = [];
+const modeArr = [];
+const hsDeployedArr = [];
+const pcDeployedArr = [];
+const gpsTimeArr = [];
+const gpsAltitudeArr = [];
+const cmdEchoArr = [];
 
 const map = L.map('map').setView([19.2105, 72.8242], 10);
 let marker = L.marker([0,0]).addTo(map);
@@ -165,20 +172,52 @@ async function fetchData() {
 
   rows.forEach(row => {
     const cols = row.split(',');
-    altarr.push(parseFloat(cols[5])); // ALTITUDE
-    spdarr.push(parseFloat(cols[6])); // AIR_SPEED
-    vltarr.push(parseFloat(cols[10])); // VOLTAGE
-    prearr.push(parseFloat(cols[11])); // PRESSURE
-    latarr.push(parseFloat(cols[14])); // GPS_LATITUDE
-    longarr.push(parseFloat(cols[15])); // GPS_LONGITUDE
-    satsarr.push(parseInt(cols[16])); // GPS_SATS
-    statearr.push(parseInt(cols[4])); // STATE
-    timearr.push(cols[1]); // MISSION_TIME
-    packet_arr.push(parseInt(cols[2])); // PACKET_COUNT
-    tiltx.push(parseFloat(cols[17])); // TILT_X
-    tilty.push(parseFloat(cols[18])); // TILT_Y
-    tempArr.push(parseFloat(cols[9])); // TEMPERATURE
-    gyroArr.push(parseFloat(cols[19])); // ROT_Z (Gyro Spin Rate)
+
+    // Map CSV columns to your variables
+    const team_id = cols[0];     
+    const mission_time = cols[1];   
+    const packet_count = cols[2];   
+    const mode = cols[3];          
+    const state_value = parseInt(cols[4]);  
+    const altitude = parseFloat(cols[5]);   
+    const air_speed = parseFloat(cols[6]);   
+    const hs_deployed = cols[7];    
+    const pc_deployed = cols[8];    
+    const temperature = parseFloat(cols[9]); 
+    const voltage = parseFloat(cols[10]);   
+    const pressure = parseFloat(cols[11]);  
+    const gps_time = cols[12];     
+    const gps_altitude = cols[13]; 
+    const latitude = parseFloat(cols[14]);   
+    const longitude = parseFloat(cols[15]); 
+    const gps_sats = parseInt(cols[16]);   
+    const tilt_x = parseFloat(cols[17]);    
+    const tilt_y = parseFloat(cols[18]);     
+    const rot_z = parseFloat(cols[19]);      
+    const cmd_echo = cols[20];      
+
+    // Push data to respective arrays
+    altarr.push(altitude); 
+    spdarr.push(air_speed); 
+    vltarr.push(voltage);
+    prearr.push(pressure);
+    latarr.push(latitude);
+    longarr.push(longitude);
+    satsarr.push(gps_sats);
+    statearr.push(state_value);
+    timearr.push(mission_time);
+    packet_arr.push(packet_count);
+    tiltx.push(tilt_x);
+    tilty.push(tilt_y);
+    tempArr.push(temperature);
+    gyroArr.push(rot_z);
+    teamIdArr.push(team_id);
+    modeArr.push(mode);
+    hsDeployedArr.push(hs_deployed);
+    pcDeployedArr.push(pc_deployed);
+    gpsTimeArr.push(gps_time);
+    gpsAltitudeArr.push(gps_altitude);
+    cmdEchoArr.push(cmd_echo);
   });
 }
 
@@ -208,6 +247,31 @@ function plotTrajectory() {
     packets.textContent = "Packet Count: \n" + packet_arr[cnt];
     tilt.textContent = `${tiltx[cnt]}° , ${tilty[cnt]}°`;
 
+    // Add a new row to the table
+    const tableBody = document.getElementById('csvTable').getElementsByTagName('tbody')[0];
+    const newRow = tableBody.insertRow();
+    newRow.insertCell().textContent = teamIdArr[cnt];
+    newRow.insertCell().textContent = timearr[cnt];
+    newRow.insertCell().textContent = packet_arr[cnt];
+    newRow.insertCell().textContent = modeArr[cnt];
+    newRow.insertCell().textContent = statearr[cnt];
+    newRow.insertCell().textContent = altarr[cnt];
+    newRow.insertCell().textContent = spdarr[cnt];
+    newRow.insertCell().textContent = hsDeployedArr[cnt];
+    newRow.insertCell().textContent = pcDeployedArr[cnt];
+    newRow.insertCell().textContent = tempArr[cnt];
+    newRow.insertCell().textContent = vltarr[cnt];
+    newRow.insertCell().textContent = prearr[cnt];
+    newRow.insertCell().textContent = gpsTimeArr[cnt];
+    newRow.insertCell().textContent = gpsAltitudeArr[cnt];
+    newRow.insertCell().textContent = latarr[cnt];
+    newRow.insertCell().textContent = longarr[cnt];
+    newRow.insertCell().textContent = satsarr[cnt];
+    newRow.insertCell().textContent = tiltx[cnt];
+    newRow.insertCell().textContent = tilty[cnt];
+    newRow.insertCell().textContent = gyroArr[cnt];
+    newRow.insertCell().textContent = cmdEchoArr[cnt];
+
     cnt++;
   } else {
     clearInterval(interval);
@@ -219,9 +283,10 @@ async function startPlotting() {
   interval = setInterval(plotTrajectory, 1000); 
 }
 
-// Event Listener for Starting the Simulation
+// Start the Sim
 document.getElementById('on').addEventListener('click', () => {
   if (!interval) {
     startPlotting();
   }
 });
+

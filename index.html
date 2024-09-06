@@ -18,6 +18,9 @@
     crossorigin=""></script>
 </head>
 <body>
+<div id ="not-csv-ka-data">
+
+
     <div class="heading_container">
         <div class="teamdetails">
             <img style="height: 98%;" src="https://media-exp1.licdn.com/dms/image/C4D0BAQH44RIzI8xEHg/company-logo_200_200/0/1579280652217?e=2159024400&v=beta&t=620Tzp0d3dPVRo4dApJREZbC5q5Pr_axDJrWCn6-Zlk" alt="team logo" class="logo">
@@ -35,7 +38,7 @@
             <div class="nav">
                 <a  class='xyz' href="#home"><img src="/home.png" alt="lhome" class="homelogo"></a>
                 <a href="#graph"><img src="/graph.png" alt="graph" class="homelogo"></a>
-                <a href="disp_csv.html"><img src="/csv.png" alt="csv" class="homelogo"></a>
+                <a href="#csv-ka-data"><img src="/csv.png" alt="csv" class="homelogo"></a>
             </div>
         </div>
     </div>
@@ -208,6 +211,38 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+    <div class="csv-container" style="font-size: 0.95em;" id="csv-ka-data">
+        <table id="csvTable">
+            <thead>
+                <tr>
+                    <th>TEAM_ID</th>
+                    <th>MISSION_TIME</th>
+                    <th>PACKET_COUNT</th>
+                    <th>MODE</th>
+                    <th>STATE</th>
+                    <th>ALTITUDE</th>
+                    <th>AIR_SPEED</th>
+                    <th>HS_DEPLOYED</th>
+                    <th>PC_DEPLOYED</th>
+                    <th>TEMPERATURE</th>
+                    <th>VOLTAGE</th>
+                    <th>PRESSURE</th>
+                    <th>GPS_TIME</th>
+                    <th>GPS_ALTITUDE</th>
+                    <th>GPS_LATITUDE</th>
+                    <th>GPS_LONGITUDE</th>
+                    <th>GPS_SATS</th>
+                    <th>TILT_X</th>
+                    <th>TILT_Y</th>
+                    <th>ROT_Z</th>
+                    <th>CMD_ECHO</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </div>
    <script src="script.js"></script>
 </body>
