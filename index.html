@@ -24,7 +24,7 @@
         <div class="teamdetails">
             <img style="height: 98%;" src="https://media-exp1.licdn.com/dms/image/C4D0BAQH44RIzI8xEHg/company-logo_200_200/0/1579280652217?e=2159024400&v=beta&t=620Tzp0d3dPVRo4dApJREZbC5q5Pr_axDJrWCn6-Zlk" alt="team logo" class="logo">
             <h1>DJS Arya</h1>
-            <h1>Team ID:0000</h1>
+            <h1 >Team ID:<span id="team_id">0000</span></h1>
             <img src="https://media.istockphoto.com/id/519611160/vector/flag-of-india.jpg?s=612x612&w=0&k=20&c=0HueaQHkdGC4Fw87s3DbeTE9Orv3mqHRLce88LV47E4=" alt="indian flag" class="flag">
         </div>
         <div class="timer">
@@ -184,7 +184,7 @@
             </div>
             
         </div>
-        <div class="graph_container">
+        <div class="graph_container" id="graph_container_123">
             <div class="g_column1">
                 <div class="Pressure_container">
                     <h1>Pressure</h1>
@@ -194,21 +194,22 @@
                     <h1>Altitude</h1>
                     <div class="graph" id="Altitude"></div>
                 </div>
+
+            </div>
+            <div class="g_column2">
+
                 <div class="Temperature_container">
                     <h1>Temperature</h1>
                     <div class="graph" id="Temperature"></div>
-                </div>
-            </div>
-            <div class="g_column2">
-                
-                <div class="Gyro_Spin_Rate_container">
-                    <h1>Gyro Spin Rate</h1>
-                    <div class="graph" id="Gyro_Spin_Rate"></div>
                 </div>
                 <div class="Voltage_container">
                     <h1>Voltage</h1>
                     <div class="graph" id="Voltage"></div>
                 </div>
+                <!-- <div class="Gyro_Spin_Rate_container">
+                    <h1>Gyro Spin Rate</h1>
+                    <div class="graph" id="Gyro_Spin_Rate"></div>
+                </div> -->
             </div>
         </div>
     </div>

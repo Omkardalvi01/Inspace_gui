@@ -16,6 +16,7 @@ const tilt = document.getElementById("tilt");
 const cmd_echo = document.getElementById("CMD_ECHO");
 const pagecont = document.querySelector(".test")
 const tblcont = document.getElementById("csv-ka-data");
+const team_id = document.getElementById("team_id");
 tblcont.classList.toggle("hidden")
 
 const altarr = [];
@@ -88,7 +89,7 @@ function stateconv(a) {
 }
 
 function simulation_e() {
-  SIM_E.style.backgroundColor = "#364591";
+  SIM_E.style.backgroundColor = "#90EE90";
   mode.textContent = "SIMULATION";
 }
 
@@ -104,10 +105,16 @@ function csvtable(){
 function home(){
   tblcont.classList.add("hidden")
   pagecont.classList.remove("hidden")
+  //scroll to top
+  window.scrollTo(0, 0);
 }
 function graph(){
   tblcont.classList.add("hidden")
   pagecont.classList.remove("hidden")
+  //href =#graph -20px
+  document.getElementById("graph_container_123").scrollIntoView();
+  //scroll up 
+  window.scrollBy(0, -110);
 }
 // Initializing Plotly Data Structures
 let altData = [{
@@ -152,7 +159,7 @@ function createLayout(yAxisTitle) {
 Plotly.newPlot('Altitude', altData, createLayout('Altitude'));
 Plotly.newPlot('Pressure', preData, createLayout('Pressure'));
 Plotly.newPlot('Temperature', tempData, createLayout('Temperature'));
-Plotly.newPlot('Gyro_Spin_Rate', gyroData, createLayout('Gyro Spin Rate'));
+// Plotly.newPlot('Gyro_Spin_Rate', gyroData, createLayout('Gyro Spin Rate'));
 Plotly.newPlot('Voltage', voltData, createLayout('Voltage'));
 
 // Initializing 3D Plotly Data Structure
@@ -245,7 +252,7 @@ function plotTrajectory() {
     Plotly.extendTraces('Altitude', { y: [[altarr[cnt]]] }, [0]);
     Plotly.extendTraces('Pressure', { y: [[prearr[cnt]]] }, [0]);
     Plotly.extendTraces('Temperature', { y: [[tempArr[cnt]]] }, [0]);
-    Plotly.extendTraces('Gyro_Spin_Rate', { y: [[gyroArr[cnt]]] }, [0]);
+    // Plotly.extendTraces('Gyro_Spin_Rate', { y: [[gyroArr[cnt]]] }, [0]);
     Plotly.extendTraces('Voltage', { y: [[vltarr[cnt]]] }, [0]);
 
     Plotly.extendTraces('trajectory-plot', {
@@ -266,6 +273,7 @@ function plotTrajectory() {
     packets.textContent = "Packet Count: \n" + packet_arr[cnt];
     tilt.textContent = `${tiltx[cnt]}° , ${tilty[cnt]}°`;
     cmd_echo.textContent = cmdEchoArr[cnt]; 
+    team_id.textContent = teamIdArr[cnt];
     marker.setLatLng([latarr[cnt],longarr[cnt]]);
     map.setView([latarr[cnt],longarr[cnt]], 10);
 
@@ -369,7 +377,7 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   Plotly.newPlot('Altitude', altData, createLayout('Altitude'));
   Plotly.newPlot('Pressure', preData, createLayout('Pressure'));
   Plotly.newPlot('Temperature', tempData, createLayout('Temperature'));
-  Plotly.newPlot('Gyro_Spin_Rate', gyroData, createLayout('Gyro Spin Rate'));
+  // Plotly.newPlot('Gyro_Spin_Rate', gyroData, createLayout('Gyro Spin Rate'));
   Plotly.newPlot('Voltage', voltData, createLayout('Voltage'));
   Plotly.newPlot('trajectory-plot', trajectoryData, trajectoryLayout);
 
@@ -392,6 +400,15 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   cmd_echo.textContent = "⠀";
 
   document.getElementById('impact').classList.remove("boxhighlighted");
+  document.getElementById('pc_deploy').classList.remove("boxhighlighted");
+  document.getElementById('glider').classList.remove("boxhighlighted");
+  document.getElementById('aerobrake').classList.remove("boxhighlighted");
+  document.getElementById('descent').classList.remove("boxhighlighted");
+  document.getElementById('rocket_d').classList.remove("boxhighlighted");
+  document.getElementById('ascent').classList.remove("boxhighlighted");
+  document.getElementById('launch').classList.remove("boxhighlighted");
+  document.getElementById('test').classList.remove("boxhighlighted");
+  document.getElementById('boot').classList.remove("boxhighlighted");
 
   // Clear the table
   const tableBody = document.getElementById('csvTable').getElementsByTagName('tbody')[0];
