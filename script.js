@@ -290,3 +290,17 @@ document.getElementById('on').addEventListener('click', () => {
   }
 });
 
+// pause the sim
+document.getElementById('pauseBtn').addEventListener('click', () => {
+  clearInterval(interval);
+  interval = null;
+});
+
+// resume the sim
+document.getElementById('resumeBtn').addEventListener('click', () => {
+  if (!interval) {
+    interval = setInterval(plotTrajectory, 1000);
+  }
+});
+
+//reset the sim
