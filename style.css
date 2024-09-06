@@ -228,9 +228,12 @@ body{
 
 .clickclick{
     height: 5vh;
-    width: auto;
-    margin: 1vh 1vb;
+    width: 5vh;
     background-color: #478CCF;
+    padding: 5px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    border-radius: 10px;
 }
 
 #command-interface {
@@ -264,7 +267,7 @@ body{
 }
 
 .csv-container {
-    margin-top: 1vh;
+    margin-top: 2vh;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;

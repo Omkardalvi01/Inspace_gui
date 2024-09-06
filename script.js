@@ -247,7 +247,7 @@ function plotTrajectory() {
     time.textContent = "Mission Time: \n" + timearr[cnt];
     packets.textContent = "Packet Count: \n" + packet_arr[cnt];
     tilt.textContent = `${tiltx[cnt]}° , ${tilty[cnt]}°`;
-    cmd_echo.textContent = cmdEchoArr[cnt]; // Update cmd_echo element
+    cmd_echo.textContent = cmdEchoArr[cnt]; 
 
     // Add a new row to the table
     const tableBody = document.getElementById('csvTable').getElementsByTagName('tbody')[0];
@@ -295,7 +295,7 @@ document.getElementById('on').addEventListener('click', () => {
 // pause the sim
 document.getElementById('pauseBtn').addEventListener('click', () => {
   clearInterval(interval);
-  interval = null;
+  interval = null;  
 });
 
 // resume the sim
@@ -305,7 +305,6 @@ document.getElementById('resumeBtn').addEventListener('click', () => {
   }
 });
 
-//reset the sim
 
 // Reset the sim
 document.getElementById('resetBtn').addEventListener('click', () => {
@@ -359,13 +358,9 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   while (tableBody.firstChild) {
     tableBody.removeChild(tableBody.firstChild);
   }
-
-  // Reset the counter
   cnt = 0;
 
-  // Clear cmd_echo element
   cmd_echo.textContent = "⠀";
 
-  // Restart plotting
   startPlotting();
 });
