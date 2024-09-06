@@ -353,6 +353,26 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   Plotly.newPlot('Voltage', voltData, createLayout('Voltage'));
   Plotly.newPlot('trajectory-plot', trajectoryData, trajectoryLayout);
 
+  // Reset the map
+  map.setView([19.2105, 72.8242], 10);
+  marker.setLatLng([0,0]);
+
+  // Reset the data fields
+  alt.textContent = "0m";
+  pre.textContent = "0bar";
+  vlt.textContent = "0V";
+  lat.textContent = "0°";
+  long.textContent = "0°";
+  sp.textContent = "0m/s";
+  sats.textContent = "0";
+  state.textContent = "NO";
+  time.textContent = "Mission Time: 0";
+  packets.textContent = "Packet Count: 0";
+  tilt.textContent = "0° , 0°";
+  cmd_echo.textContent = "⠀";
+
+  document.getElementById('impact').classList.remove("boxhighlighted");
+
   // Clear the table
   const tableBody = document.getElementById('csvTable').getElementsByTagName('tbody')[0];
   while (tableBody.firstChild) {
