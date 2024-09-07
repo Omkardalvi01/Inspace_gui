@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Model Visualization</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Create a scene
+        const scene = new THREE.Scene();
+
+        // Create a camera
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        // Create a renderer
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Create materials for the sides, top, and bottom
+        const sideMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+        const topMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+        const bottomMaterial = new THREE.MeshStandardMaterial({ color: 0x0000ff });
+
+        // Create a cylinder to represent the CanSat
+        const geometry = new THREE.CylinderGeometry(1, 1, 2, 32);
+        const materials = [sideMaterial, topMaterial, bottomMaterial];
+        const cansat = new THREE.Mesh(geometry, materials);
+        scene.add(cansat);
+
+        // Add a light source
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(5, 5, 5).normalize();
+        scene.add(light);
+
+        // Function to animate the CanSat
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+
+        // Function to update CanSat rotation based on tilt values
+        function updateCanSatRotation(tiltX, tiltY) {
+            cansat.rotation.y = tiltX; // Rotate left and right
+            cansat.rotation.x = tiltY; // Tilt up and down
+        }
+
+        // Read CSV data and update CanSat rotation
+        async function readCSVAndAnimate() {
+            const response = await fetch('test.csv');
+            const data = await response.text();
+            const rows = data.split('\n').slice(1); // Skip header row
+
+            let currentIndex = 0;
+
+            setInterval(() => {
+                if (currentIndex < rows.length) {
+                    const cols = rows[currentIndex].split(',');
+                    const tiltX = parseFloat(cols[17]);
+                    const tiltY = parseFloat(cols[18]);
+
+                    // Update CanSat rotation
+                    updateCanSatRotation(tiltX, tiltY);
+
+                    currentIndex++;
+                }
+            }, 1000);
+
+            animate();
+        }
+
+        // Start reading CSV and animating
+        readCSVAndAnimate();
+    </script>
+</body>
+</html>
