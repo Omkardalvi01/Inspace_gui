@@ -333,12 +333,12 @@ body {
     overflow-y: auto;
     color: black;
     transform: translateY(100px);
+    display: none;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    
 }
 
 table tr:nth-child(even) {
@@ -365,7 +365,4 @@ table td {
 
 a {
     text-decoration: none;
-}
-.hidden{
-    display: none;
 }

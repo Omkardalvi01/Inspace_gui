@@ -33,13 +33,14 @@
         </div>
         <div class="nav_cont"> 
             <div class="nav">
-                <a  class='xyz' onclick=home()><img src="/home.png" alt="lhome" class="homelogo"></a>
-                <a onclick=graph()><img src="/graph.png" alt="graph" class="homelogo"></a>
-                <a onclick=csvtable()><img src="/csv.png" alt="csv" class="homelogo"></a>
+                <a  class='xyz'><img src="/home.png" alt="lhome" class="homelogo" id="homeBtn"></a>
+                <a ><img src="/graph.png" alt="graph" class="homelogo" id="graphBtn"></a>
+                <a ><img src="/csv.png" alt="csv" class="homelogo" id="csvBtn"></a>
             </div>
         </div>
     </div>
-    <div class="test">
+    
+    <div class="test" id="not-csv-ka-data">
         <div class="leftside_cont">
             <div class="datapoints_container">
                 <div class="column1"> 
@@ -214,6 +215,7 @@
 
         </div>
     </div>
+    </div> 
 
     <div class="csv-container" style="font-size: 1.2em;" id="csv-ka-data">
         <table id="csvTable">
@@ -246,10 +248,8 @@
             </tbody>
         </table>
     </div>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-   <script src="script.js"></script>
-   <script>
-
-</script>
+    <script src="script.js"></script>
 </body>
 </html>

@@ -14,10 +14,7 @@ const time = document.getElementById("time");
 const packets = document.getElementById("pack_count");
 const tilt = document.getElementById("tilt");
 const cmd_echo = document.getElementById("CMD_ECHO");
-const pagecont = document.querySelector(".test")
-const tblcont = document.getElementById("csv-ka-data");
 const team_id = document.getElementById("team_id");
-tblcont.classList.toggle("hidden")
 
 const altarr = [];
 const prearr = [];
@@ -98,24 +95,35 @@ function simulation_d() {
   mode.textContent = "FLIGHT";
 }
 
-function csvtable(){
-  tblcont.classList.remove("hidden")
-  pagecont.classList.add("hidden")
+const tblcont = document.getElementById("csv-ka-data");
+const pagecont = document.getElementById("not-csv-ka-data");
+
+function csvtable() {
+
+  pagecont.style.display="none";
+  tblcont.style.display="block";
+
 }
-function home(){
-  tblcont.classList.add("hidden")
-  pagecont.classList.remove("hidden")
-  //scroll to top
-  window.scrollTo(0, 0);
+
+function home() {
+
+    tblcont.style.display="none";
+    pagecont.style.display="block";
+    window.scrollTo(0, 0);
 }
-function graph(){
-  tblcont.classList.add("hidden")
-  pagecont.classList.remove("hidden")
-  //href =#graph -20px
-  document.getElementById("graph_container_123").scrollIntoView();
-  //scroll up 
-  window.scrollBy(0, -110);
+
+function graph() {
+
+    tblcont.style.display="none";
+    pagecont.style.display="block";
+    document.getElementById("graph_container_123").scrollIntoView();
+    window.scrollBy(0, -110);
 }
+
+// Add event listeners for buttons
+document.getElementById('homeBtn').addEventListener('click', home);
+document.getElementById('graphBtn').addEventListener('click', graph);
+document.getElementById('csvBtn').addEventListener('click', csvtable);
 // Initializing Plotly Data Structures
 let altData = [{
   y: [],
