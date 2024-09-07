@@ -159,7 +159,7 @@ function createLayout(yAxisTitle) {
 Plotly.newPlot('Altitude', altData, createLayout('Altitude'));
 Plotly.newPlot('Pressure', preData, createLayout('Pressure'));
 Plotly.newPlot('Temperature', tempData, createLayout('Temperature'));
-// Plotly.newPlot('Gyro_Spin_Rate', gyroData, createLayout('Gyro Spin Rate'));
+Plotly.newPlot('Gyro_Spin_Rate', gyroData, createLayout('Gyro Spin Rate'));
 Plotly.newPlot('Voltage', voltData, createLayout('Voltage'));
 
 // Initializing 3D Plotly Data Structure
@@ -259,7 +259,7 @@ function plotTrajectory() {
     Plotly.extendTraces('Altitude', { y: [[altarr[cnt]]] }, [0]);
     Plotly.extendTraces('Pressure', { y: [[prearr[cnt]]] }, [0]);
     Plotly.extendTraces('Temperature', { y: [[tempArr[cnt]]] }, [0]);
-    // Plotly.extendTraces('Gyro_Spin_Rate', { y: [[gyroArr[cnt]]] }, [0]);
+    Plotly.extendTraces('Gyro_Spin_Rate', { y: [[gyroArr[cnt]]] }, [0]);
     Plotly.extendTraces('Voltage', { y: [[vltarr[cnt]]] }, [0]);
 
     Plotly.extendTraces('trajectory-plot', {
@@ -324,6 +324,7 @@ async function startPlotting() {
 document.getElementById('on').addEventListener('click', () => {
   if (!interval) {
     startPlotting();
+    readCSVAndAnimate();
   }
 });
 
@@ -346,6 +347,9 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   // Clear the interval
   clearInterval(interval);
   interval = null;
+
+  // Reset the index for reading CSV
+  currentIndex = 0;
 
   // Clear all data arrays
   altarr.length = 0;
@@ -384,7 +388,7 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   Plotly.newPlot('Altitude', altData, createLayout('Altitude'));
   Plotly.newPlot('Pressure', preData, createLayout('Pressure'));
   Plotly.newPlot('Temperature', tempData, createLayout('Temperature'));
-  // Plotly.newPlot('Gyro_Spin_Rate', gyroData, createLayout('Gyro Spin Rate'));
+  Plotly.newPlot('Gyro_Spin_Rate', gyroData, createLayout('Gyro Spin Rate'));
   Plotly.newPlot('Voltage', voltData, createLayout('Voltage'));
   Plotly.newPlot('trajectory-plot', trajectoryData, trajectoryLayout);
 
@@ -417,6 +421,11 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   document.getElementById('test').classList.remove("boxhighlighted");
   document.getElementById('boot').classList.remove("boxhighlighted");
 
+  // Reset the 3D orientation
+  cansat.rotation.x = 0;
+  cansat.rotation.y = 0;
+  cansat.rotation.z = 0;
+
   // Clear the table
   const tableBody = document.getElementById('csvTable').getElementsByTagName('tbody')[0];
   while (tableBody.firstChild) {
@@ -426,7 +435,9 @@ document.getElementById('resetBtn').addEventListener('click', () => {
 
   cmd_echo.textContent = "⠀";
 
+  // Restart CSV reading and 3D orientation animation from the beginning
   startPlotting();
+  readCSVAndAnimate(); // Restart animation from the beginning
 });
 
 
@@ -457,8 +468,124 @@ function displayCommandOutput(text) {
   const commandOutput = document.getElementById('commandOutput');
   const newCommand = document.createElement('div');
   newCommand.textContent = text;
-  commandOutput.appendChild(newCommand); // Append new command at the end
-
+  commandOutput.appendChild(newCommand); 
   // Auto-scroll to the bottom
   commandOutput.scrollTop = commandOutput.scrollHeight;
 }
+
+
+    // Create a scene
+    const scene = new THREE.Scene();
+
+    // Create a camera
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 5;
+
+    // Create a renderer
+    const renderer = new THREE.WebGLRenderer();
+    const orientationDiv = document.getElementById('orientation');
+    renderer.setSize(orientationDiv.clientWidth, orientationDiv.clientHeight);
+    orientationDiv.appendChild(renderer.domElement);
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        const width = orientationDiv.clientWidth;
+        const height = orientationDiv.clientHeight;
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+    });
+
+    // Create materials for the sides, top, and bottom with better colors
+    const sideMaterial = new THREE.MeshStandardMaterial({ color: 0x3498db }); // Blue
+    const topMaterial = new THREE.MeshStandardMaterial({ color: 0xe74c3c }); // Red
+    const bottomMaterial = new THREE.MeshStandardMaterial({ color: 0x2ecc71 }); // Green
+
+    // Create a cuboid to represent the CanSat with higher resolution
+    const geometry = new THREE.BoxGeometry(1, 2, 1, 10, 10, 10); // Increase segments for higher resolution
+    const materials = [sideMaterial, sideMaterial, topMaterial, bottomMaterial, sideMaterial, sideMaterial];
+    const cansat = new THREE.Mesh(geometry, materials);
+    scene.add(cansat);
+
+    // Add a directional light source
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    directionalLight.position.set(5, 5, 5).normalize();
+    scene.add(directionalLight);
+
+    // Add an ambient light source
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+
+    // Add axes helper
+    const axesHelper = new THREE.AxesHelper(3);
+    scene.add(axesHelper);
+
+    // Function to animate the CanSat
+    function animate() {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+    }
+
+    // Function to update CanSat rotation based on tilt values
+    function updateCanSatRotation(tiltX, tiltY, rotZ) {
+        cansat.rotation.x = tiltX; 
+        cansat.rotation.y = tiltY;
+        cansat.rotation.z = rotZ;
+    }
+
+    // Read CSV data and update CanSat rotation
+    let currentIndex = 0;
+    let intervalId = null; 
+    
+    // Function to read CSV and animate
+    async function readCSVAndAnimate() {
+      const response = await fetch('test.csv');
+      const data = await response.text();
+      const rows = data.split('\n').slice(1); 
+    
+      // If there's an existing interval, clear it before starting a new one
+      if (intervalId !== null) {
+        clearInterval(intervalId);
+      }
+    
+      // Reset the index before starting
+      currentIndex = 0;
+    
+      intervalId = setInterval(() => {
+        if (currentIndex < rows.length) {
+          const cols = rows[currentIndex].split(',');
+          const tiltX = parseFloat(cols[17]);
+          const tiltY = parseFloat(cols[18]);
+          const rotZ = parseFloat(cols[19]);
+    
+          // Update CanSat rotation
+          updateCanSatRotation(tiltX, tiltY, rotZ);
+    
+          currentIndex++;
+        } else {
+          clearInterval(intervalId); 
+        }
+      }, 1000);
+      
+    }
+        // Function to start or resume 3D orientation
+        function start3DOrientation() {
+          if (intervalId === null) {
+            readCSVAndAnimate(); 
+          }
+        }
+    
+        // Function to pause 3D orientation
+        function pause3DOrientation() {
+          if (intervalId !== null) {
+            clearInterval(intervalId);
+            intervalId = null;
+          }
+        }
+    
+        // Event listeners for 3D orientation play/pause
+        document.getElementById('on').addEventListener('click', start3DOrientation);
+        document.getElementById('pauseBtn').addEventListener('click', pause3DOrientation);
+        document.getElementById('resumeBtn').addEventListener('click', start3DOrientation);
+
+    animate();

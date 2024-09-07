@@ -7,9 +7,11 @@
     <style>
         body { margin: 0; }
         canvas { display: block; }
+        #orientation { width: 100vw; height: 100vh; }
     </style>
 </head>
 <body>
+    <div id="orientation" style="widh"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         // Create a scene
@@ -22,23 +24,31 @@
         // Create a renderer
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+        document.getElementById('orientation').appendChild(renderer.domElement);
 
-        // Create materials for the sides, top, and bottom
-        const sideMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
-        const topMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
-        const bottomMaterial = new THREE.MeshStandardMaterial({ color: 0x0000ff });
+        // Create materials for the sides, top, and bottom with better colors
+        const sideMaterial = new THREE.MeshStandardMaterial({ color: 0x3498db }); // Blue
+        const topMaterial = new THREE.MeshStandardMaterial({ color: 0xe74c3c }); // Red
+        const bottomMaterial = new THREE.MeshStandardMaterial({ color: 0x2ecc71 }); // Green
 
-        // Create a cylinder to represent the CanSat
-        const geometry = new THREE.CylinderGeometry(1, 1, 2, 32);
-        const materials = [sideMaterial, topMaterial, bottomMaterial];
+        // Create a cuboid to represent the CanSat with higher resolution
+        const geometry = new THREE.BoxGeometry(1, 2, 1, 10, 10, 10); // Increase segments for higher resolution
+        const materials = [sideMaterial, sideMaterial, topMaterial, bottomMaterial, sideMaterial, sideMaterial];
         const cansat = new THREE.Mesh(geometry, materials);
         scene.add(cansat);
 
-        // Add a light source
-        const light = new THREE.DirectionalLight(0xffffff, 1);
-        light.position.set(5, 5, 5).normalize();
-        scene.add(light);
+        // Add a directional light source
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        directionalLight.position.set(5, 5, 5).normalize();
+        scene.add(directionalLight);
+
+        // Add an ambient light source
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        // Add axes helper
+        const axesHelper = new THREE.AxesHelper(3);
+        scene.add(axesHelper);
 
         // Function to animate the CanSat
         function animate() {
@@ -47,9 +57,10 @@
         }
 
         // Function to update CanSat rotation based on tilt values
-        function updateCanSatRotation(tiltX, tiltY) {
-            cansat.rotation.y = tiltX; // Rotate left and right
-            cansat.rotation.x = tiltY; // Tilt up and down
+        function updateCanSatRotation(tiltX, tiltY, rotZ) {
+            cansat.rotation.x = tiltX; // Tilt up and down
+            cansat.rotation.y = tiltY; // Rotate left and right
+            cansat.rotation.z = rotZ; // Rotate around Z-axis
         }
 
         // Read CSV data and update CanSat rotation
@@ -65,9 +76,10 @@
                     const cols = rows[currentIndex].split(',');
                     const tiltX = parseFloat(cols[17]);
                     const tiltY = parseFloat(cols[18]);
+                    const rotZ = parseFloat(cols[19]);
 
                     // Update CanSat rotation
-                    updateCanSatRotation(tiltX, tiltY);
+                    updateCanSatRotation(tiltX, tiltY, rotZ);
 
                     currentIndex++;
                 }
