@@ -192,12 +192,16 @@ let cnt = 0;
 let interval = null;
 
 async function fetchData() {
-  const response = await fetch('test.csv');
-  const data = await response.text();
-  const rows = data.split('\n').slice(1); 
+  try {
+    const response = await fetch('test.csv');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.text();
+    const rows = data.split('\n').slice(1); 
 
-  rows.forEach(row => {
-    const cols = row.split(',');
+    rows.forEach(row => {
+      const cols = row.split(',');
 
     // Map CSV columns to your variables
     const team_id = cols[0];     
@@ -244,7 +248,10 @@ async function fetchData() {
     gpsTimeArr.push(gps_time);
     gpsAltitudeArr.push(gps_altitude);
     cmdEchoArr.push(cmd_echo);
-  });
+    });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
 }
 
 function plotTrajectory() {
