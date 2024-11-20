@@ -1,3 +1,4 @@
+
 const SIM_E = document.getElementById("s_enable");
 const SIM_D = document.getElementById("s_disable");
 const mode = document.getElementById("mode");
@@ -38,7 +39,7 @@ const gpsTimeArr = [];
 const gpsAltitudeArr = [];
 const cmdEchoArr = [];
 
-const map = L.map('map').setView([19.2105, 72.8242], 10);
+const map = L.map('map').setView([19.2105, 72.8242], 15);
 let marker = L.marker([19.2105, 72.8242]).addTo(map);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
@@ -195,70 +196,69 @@ let trajectoryLayout = {
 
 Plotly.newPlot('trajectory-plot', trajectoryData, trajectoryLayout);
 
-// Data Plotting and Fetching Logic
 let cnt = 0;
 let interval = null;
-
 async function fetchData() {
   try {
-    const response = await fetch('test.csv');
+    const response = await fetch('/data');
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error('Failed to fetch CSV data');
     }
-    const data = await response.text();
-    const rows = data.split('\n').slice(1); 
+    const contentType = response.headers.get('Content-Type');
+    if (!contentType || !contentType.includes('application/json')) {
+      throw new Error('Response is not JSON');
+    }
+    const csvData = await response.json();  
 
-    rows.forEach(row => {
-      const cols = row.split(',');
+    const { 
+      altarr: fetchedAltarr, 
+      spdarr: fetchedSpdarr, 
+      vltarr: fetchedVltarr, 
+      prearr: fetchedPrearr, 
+      latarr: fetchedLatarr, 
+      longarr: fetchedLongarr, 
+      satsarr: fetchedSatsarr, 
+      statearr: fetchedStatearr, 
+      timearr: fetchedTimearr, 
+      packet_arr: fetchedPacketArr, 
+      tiltx: fetchedTiltx, 
+      tilty: fetchedTilty, 
+      tempArr: fetchedTempArr, 
+      gyroArr: fetchedGyroArr, 
+      teamIdArr: fetchedTeamIdArr, 
+      modeArr: fetchedModeArr, 
+      hsDeployedArr: fetchedHsDeployedArr, 
+      pcDeployedArr: fetchedPcDeployedArr, 
+      gpsTimeArr: fetchedGpsTimeArr, 
+      gpsAltitudeArr: fetchedGpsAltitudeArr, 
+      cmdEchoArr: fetchedCmdEchoArr 
+    } = csvData;
 
-    // Map CSV columns to your variables
-    const team_id = cols[0];     
-    const mission_time = cols[1];   
-    const packet_count = cols[2];   
-    const mode = cols[3];          
-    const state_value = parseInt(cols[4]);  
-    const altitude = parseFloat(cols[5]);   
-    const air_speed = parseFloat(cols[6]);   
-    const hs_deployed = cols[7];    
-    const pc_deployed = cols[8];    
-    const temperature = parseFloat(cols[9]); 
-    const voltage = parseFloat(cols[10]);   
-    const pressure = parseFloat(cols[11]);  
-    const gps_time = cols[12];     
-    const gps_altitude = cols[13]; 
-    const latitude = parseFloat(cols[14]);   
-    const longitude = parseFloat(cols[15]); 
-    const gps_sats = parseInt(cols[16]);   
-    const tilt_x = parseFloat(cols[17]);    
-    const tilt_y = parseFloat(cols[18]);     
-    const rot_z = parseFloat(cols[19]);      
-    const cmd_echo = cols[20];      
+    // Now, populate the arrays with the fetched data
+    altarr.push(...fetchedAltarr);
+    spdarr.push(...fetchedSpdarr);
+    vltarr.push(...fetchedVltarr);
+    prearr.push(...fetchedPrearr);
+    latarr.push(...fetchedLatarr);
+    longarr.push(...fetchedLongarr);
+    satsarr.push(...fetchedSatsarr);
+    statearr.push(...fetchedStatearr);
+    timearr.push(...fetchedTimearr);
+    packet_arr.push(...fetchedPacketArr);
+    tiltx.push(...fetchedTiltx);
+    tilty.push(...fetchedTilty);
+    tempArr.push(...fetchedTempArr);
+    gyroArr.push(...fetchedGyroArr);
+    teamIdArr.push(...fetchedTeamIdArr);
+    modeArr.push(...fetchedModeArr);
+    hsDeployedArr.push(...fetchedHsDeployedArr);
+    pcDeployedArr.push(...fetchedPcDeployedArr);
+    gpsTimeArr.push(...fetchedGpsTimeArr);
+    gpsAltitudeArr.push(...fetchedGpsAltitudeArr);
+    cmdEchoArr.push(...fetchedCmdEchoArr);
 
-    // Push data to respective arrays
-    altarr.push(altitude); 
-    spdarr.push(air_speed); 
-    vltarr.push(voltage);
-    prearr.push(pressure);
-    latarr.push(latitude);
-    longarr.push(longitude);
-    satsarr.push(gps_sats);
-    statearr.push(state_value);
-    timearr.push(mission_time);
-    packet_arr.push(packet_count);
-    tiltx.push(tilt_x);
-    tilty.push(tilt_y);
-    tempArr.push(temperature);
-    gyroArr.push(rot_z);
-    teamIdArr.push(team_id);
-    modeArr.push(mode);
-    hsDeployedArr.push(hs_deployed);
-    pcDeployedArr.push(pc_deployed);
-    gpsTimeArr.push(gps_time);
-    gpsAltitudeArr.push(gps_altitude);
-    cmdEchoArr.push(cmd_echo);
-    });
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error('Error fetching CSV data:', error);
   }
 }
 
@@ -290,7 +290,6 @@ function plotTrajectory() {
     cmd_echo.textContent = cmdEchoArr[cnt]; 
     team_id.textContent = teamIdArr[cnt];
     marker.setLatLng([latarr[cnt],longarr[cnt]]);
-    map.setView([latarr[cnt],longarr[cnt]], 10);
 
     // Add a new row to the table
     const tableBody = document.getElementById('csvTable').getElementsByTagName('tbody')[0];
@@ -401,7 +400,7 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   Plotly.newPlot('trajectory-plot', trajectoryData, trajectoryLayout);
 
   // Reset the map
-  map.setView([19.2105, 72.8242], 10);
+  map.setView([19.2105, 72.8242], 15);
   marker.setLatLng([0,0]);
 
   // Reset the data fields
