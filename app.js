@@ -27,11 +27,29 @@ let csvData = {
     cmdEchoArr: []
 };
 
+async function writeCSVData(rows, timestamp) {
+  const outputFilePath = path.join(__dirname, `/public/${timestamp}.csv`);
+  const header = 'team_id,mission_time,packet_count,mode,state_value,altitude,air_speed,hs_deployed,pc_deployed,temperature,voltage,pressure,gps_time,gps_altitude,latitude,longitude,gps_sats,tilt_x,tilt_y,rot_z,cmd_echo\n';
+  
+  fs.writeFileSync(outputFilePath, header);
+
+  let i = 0;
+  const intervalId = setInterval(() => {
+    if (i < rows.length) {
+      fs.appendFileSync(outputFilePath, rows[i] + '\n');
+      i++;
+    } else {
+      clearInterval(intervalId);
+    }
+  }, 1000); // Wait for 1 second
+}
+
 async function readCSVData() {
     try {
       const filePath = path.join(__dirname, '/public/test.csv'); 
       const data = fs.readFileSync(filePath, 'utf-8');  
       const rows = data.split('\n').slice(1);  
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-'); // Generate timestamp
   
       rows.forEach(row => {
         const cols = row.split(',');
@@ -81,6 +99,7 @@ async function readCSVData() {
         csvData.cmdEchoArr.push(cmd_echo);
       });
       console.log('CSV Data Processed Successfully');
+      writeCSVData(rows, timestamp); // Pass the timestamp to the new function
     } catch (error) {
       console.error('Error reading or processing CSV data:', error);
     }
