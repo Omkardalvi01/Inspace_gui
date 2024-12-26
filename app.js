@@ -1,7 +1,7 @@
-const express = require('express')
-const path = require('path')
-const fs = require('fs')
-const app = express()
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
+const app = express();
 
 let csvData = {
     altarr: [],
@@ -53,7 +53,7 @@ async function readCSVData() {
   
       rows.forEach(row => {
         const cols = row.split(',');
-  
+
         const team_id = cols[0];
         const mission_time = cols[1];
         const packet_count = cols[2];
@@ -119,4 +119,6 @@ app.get('/data', async (req, res) => {
   }
 });
 
-app.listen(process.env.port || 3000)
+app.listen(process.env.port || 3000, () => {
+  console.log('Server is running on port 3000');
+});

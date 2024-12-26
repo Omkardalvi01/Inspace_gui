@@ -1,4 +1,3 @@
-
 const SIM_E = document.getElementById("s_enable");
 const SIM_D = document.getElementById("s_disable");
 const mode = document.getElementById("mode");
@@ -546,35 +545,37 @@ function displayCommandOutput(text) {
     
     // Function to read CSV and animate
     async function readCSVAndAnimate() {
-      const response = await fetch('test.csv');
-      const data = await response.text();
-      const rows = data.split('\n').slice(1); 
-    
-      // If there's an existing interval, clear it before starting a new one
-      if (intervalId !== null) {
-        clearInterval(intervalId);
-      }
-    
-      // Reset the index before starting
-      currentIndex = 0;
-    
-      intervalId = setInterval(() => {
-        if (currentIndex < rows.length) {
-          const cols = rows[currentIndex].split(',');
-          const tiltX = parseFloat(cols[17]);
-          const tiltY = parseFloat(cols[18]);
-          const rotZ = parseFloat(cols[19]);
-    
-          // Update CanSat rotation
-          updateCanSatRotation(tiltX, tiltY, rotZ);
-    
-          currentIndex++;
-        } else {
-          clearInterval(intervalId); 
+      try {
+        const response = await fetch('/data');
+        if (!response.ok) {
+          throw new Error('Failed to fetch JSON data for 3D orientation');
         }
-      }, 1000);
-      
+        const data = await response.json();
+        // Extract tilt and rotation arrays
+        const tiltXData = data.tiltx;
+        const tiltYData = data.tilty;
+        const rotZData = data.gyroArr;
+        // Ensure interval is cleared before starting
+        if (intervalId !== null) {
+          clearInterval(intervalId);
+        }
+        currentIndex = 0;
+        intervalId = setInterval(() => {
+          if (currentIndex < tiltXData.length) {
+            const tiltX = tiltXData[currentIndex];
+            const tiltY = tiltYData[currentIndex];
+            const rotZ = rotZData[currentIndex];
+            updateCanSatRotation(tiltX, tiltY, rotZ);
+            currentIndex++;
+          } else {
+            clearInterval(intervalId);
+          }
+        }, 1000);
+      } catch (error) {
+        console.error('Error fetching 3D orientation data:', error);
+      }
     }
+    
         // Function to start or resume 3D orientation
         function start3DOrientation() {
           if (intervalId === null) {
