@@ -89,8 +89,8 @@
                 </div>
                 <div class="column2">
                     <div class="datapoints" id="sim">
-                        <button id="s_enable" onclick="simulation_e()">SIM_ENABLE</button>
-                        <button id="s_disable" onclick="simulation_d()">SIM_DISABLE</button>
+                        <button id="s_enable" >SIM_ENABLE</button>
+                        <button id="s_disable">SIM_DISABLE</button>
                     </div>
                     <div class="datapoints" >
                         <h1 class="dataques">Pressure:</h1>
@@ -166,7 +166,7 @@
                                 <div id="commandOutput" class="command-output" style="height: 100px; overflow-y: auto;"></div>
                             </div>
                             <div id="command-input">
-                                <input type="text" id="inputcommand" placeholder="Command...">
+                                <input type="text" id="inputcommand" placeholder="Command..." autocomplete="off">
                                 <button id="executeCommand" >Execute</button>
                             </div>
                             <div class="3d_Graph_container" style="height: 100%;">

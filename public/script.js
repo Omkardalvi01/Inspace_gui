@@ -40,6 +40,7 @@ const cmdEchoArr = [];
 
 const map = L.map('map').setView([19.2105, 72.8242], 15);
 let marker = L.marker([19.2105, 72.8242]).addTo(map);
+let polyline = L.polyline([], { color: 'blue' }).addTo(map);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -289,6 +290,8 @@ function plotTrajectory() {
     cmd_echo.textContent = cmdEchoArr[cnt]; 
     team_id.textContent = teamIdArr[cnt];
     marker.setLatLng([latarr[cnt],longarr[cnt]]);
+    //keep the below line to track the path of the cansat
+    polyline.addLatLng([latarr[cnt], longarr[cnt]]);
 
     // Add a new row to the table
     const tableBody = document.getElementById('csvTable').getElementsByTagName('tbody')[0];
@@ -446,6 +449,8 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   readCSVAndAnimate(); // Restart animation from the beginning
 });
 
+SIM_E.addEventListener('click', simulation_e);
+SIM_D.addEventListener('click', simulation_d);
 
 const commandInput = document.getElementById('inputcommand');
 const executeCommandButton = document.getElementById('executeCommand');

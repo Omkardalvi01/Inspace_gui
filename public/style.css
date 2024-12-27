@@ -133,6 +133,7 @@ body {
 .datapoints button:hover {
     /* background-color: #73dbc1; */
     cursor: pointer;
+    background-color: #bcc0bce3;
 }
 
 .status {
