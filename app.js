@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const app = express();
+const port = 3000;
 
 let csvData = {
     altarr: [],
@@ -107,7 +108,7 @@ async function readCSVData() {
   
 readCSVData();
 
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 app.get('/data', async (req, res) => {
   try {
@@ -119,6 +120,12 @@ app.get('/data', async (req, res) => {
   }
 });
 
-app.listen(process.env.port || 3000, () => {
-  console.log('Server is running on port 3000');
+app.post('/log-cmnd', (req, res) => {
+    const command = req.query.command;
+    console.log(`Command received: ${command}`);
+    res.status(200).send('Command logged successfully');
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
 });

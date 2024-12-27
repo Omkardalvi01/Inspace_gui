@@ -451,10 +451,30 @@ const commandInput = document.getElementById('inputcommand');
 const executeCommandButton = document.getElementById('executeCommand');
 const commandOutput = document.getElementById('commandOutput');
 
-executeCommandButton.addEventListener('click', () => {
+commandInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        executeCommandButton.click();
+    }
+});
+
+executeCommandButton.addEventListener('click', async () => {
     const command = commandInput.value.trim();
     handleCommand(command);
     commandInput.value = ''; 
+
+    try {
+        const response = await fetch(`/log-cmnd?command=${encodeURIComponent(command)}`, {
+            method: 'POST'
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to log the command');
+        }
+
+        console.log('Command logged successfully');
+    } catch (error) {
+        console.error('Error logging the command:', error);
+    }
 });
 
 function handleCommand(command) {
