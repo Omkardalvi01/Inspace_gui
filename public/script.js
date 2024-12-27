@@ -92,7 +92,7 @@ function simulation_e() {
 }
 
 function simulation_d() {
-  SIM_E.style.backgroundColor = "#FFFFFF";
+  SIM_E.style.backgroundColor = "#F0F0F0";
   mode.textContent = "FLIGHT";
 }
 

@@ -50,7 +50,7 @@ async function readCSVData() {
       const filePath = path.join(__dirname, '/public/test.csv'); 
       const data = fs.readFileSync(filePath, 'utf-8');  
       const rows = data.split('\n').slice(1);  
-      const timestamp = new Date().toISOString().replace(/[:.]/g, '-'); // Generate timestamp
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '_'); // Generate timestamp
   
       rows.forEach(row => {
         const cols = row.split(',');
