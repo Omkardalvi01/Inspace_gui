@@ -403,7 +403,8 @@ document.getElementById('resetBtn').addEventListener('click', () => {
 
   // Reset the map
   map.setView([19.2105, 72.8242], 15);
-  marker.setLatLng([0,0]);
+  marker.setLatLng([19.2105, 72.8242]);
+  polyline.setLatLngs([]);
 
   // Reset the data fields
   alt.textContent = "0m";
