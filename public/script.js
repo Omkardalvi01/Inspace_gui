@@ -38,6 +38,10 @@ const gpsTimeArr = [];
 const gpsAltitudeArr = [];
 const cmdEchoArr = [];
 
+// Socket.io client-side code
+const socket = io();
+
+
 const map = L.map('map').setView([19.2105, 72.8242], 15);
 let marker = L.marker([19.2105, 72.8242]).addTo(map);
 let polyline = L.polyline([], { color: 'blue' }).addTo(map);
@@ -199,67 +203,8 @@ Plotly.newPlot('trajectory-plot', trajectoryData, trajectoryLayout);
 let cnt = 0;
 let interval = null;
 async function fetchData() {
-  try {
-    const response = await fetch('/data');
-    if (!response.ok) {
-      throw new Error('Failed to fetch CSV data');
-    }
-    const contentType = response.headers.get('Content-Type');
-    if (!contentType || !contentType.includes('application/json')) {
-      throw new Error('Response is not JSON');
-    }
-    const csvData = await response.json();  
-
-    const { 
-      altarr: fetchedAltarr, 
-      spdarr: fetchedSpdarr, 
-      vltarr: fetchedVltarr, 
-      prearr: fetchedPrearr, 
-      latarr: fetchedLatarr, 
-      longarr: fetchedLongarr, 
-      satsarr: fetchedSatsarr, 
-      statearr: fetchedStatearr, 
-      timearr: fetchedTimearr, 
-      packet_arr: fetchedPacketArr, 
-      tiltx: fetchedTiltx, 
-      tilty: fetchedTilty, 
-      tempArr: fetchedTempArr, 
-      gyroArr: fetchedGyroArr, 
-      teamIdArr: fetchedTeamIdArr, 
-      modeArr: fetchedModeArr, 
-      hsDeployedArr: fetchedHsDeployedArr, 
-      pcDeployedArr: fetchedPcDeployedArr, 
-      gpsTimeArr: fetchedGpsTimeArr, 
-      gpsAltitudeArr: fetchedGpsAltitudeArr, 
-      cmdEchoArr: fetchedCmdEchoArr 
-    } = csvData;
-
-    // Now, populate the arrays with the fetched data
-    altarr.push(...fetchedAltarr);
-    spdarr.push(...fetchedSpdarr);
-    vltarr.push(...fetchedVltarr);
-    prearr.push(...fetchedPrearr);
-    latarr.push(...fetchedLatarr);
-    longarr.push(...fetchedLongarr);
-    satsarr.push(...fetchedSatsarr);
-    statearr.push(...fetchedStatearr);
-    timearr.push(...fetchedTimearr);
-    packet_arr.push(...fetchedPacketArr);
-    tiltx.push(...fetchedTiltx);
-    tilty.push(...fetchedTilty);
-    tempArr.push(...fetchedTempArr);
-    gyroArr.push(...fetchedGyroArr);
-    teamIdArr.push(...fetchedTeamIdArr);
-    modeArr.push(...fetchedModeArr);
-    hsDeployedArr.push(...fetchedHsDeployedArr);
-    pcDeployedArr.push(...fetchedPcDeployedArr);
-    gpsTimeArr.push(...fetchedGpsTimeArr);
-    gpsAltitudeArr.push(...fetchedGpsAltitudeArr);
-    cmdEchoArr.push(...fetchedCmdEchoArr);
-
-  } catch (error) {
-    console.error('Error fetching CSV data:', error);
-  }
+  // No need to fetch data via API request
+  // Data will be received via socket
 }
 
 function plotTrajectory() {
@@ -325,26 +270,28 @@ function plotTrajectory() {
 }
 
 async function startPlotting() {
-  await fetchData();
+  // No need to fetch data via API request
   interval = setInterval(plotTrajectory, 1000); 
 }
 
 // Start the Sim
 document.getElementById('on').addEventListener('click', () => {
+  socket.emit('start');
   if (!interval) {
     startPlotting();
-    readCSVAndAnimate();
   }
 });
 
 // pause the sim
 document.getElementById('pauseBtn').addEventListener('click', () => {
+  socket.emit('pause');
   clearInterval(interval);
   interval = null;  
 });
 
 // resume the sim
 document.getElementById('resumeBtn').addEventListener('click', () => {
+  socket.emit('resume');
   if (!interval) {
     interval = setInterval(plotTrajectory, 1000);
   }
@@ -353,6 +300,7 @@ document.getElementById('resumeBtn').addEventListener('click', () => {
 
 // Reset the sim
 document.getElementById('resetBtn').addEventListener('click', () => {
+  socket.emit('reset');
   // Clear the interval
   clearInterval(interval);
   interval = null;
@@ -447,7 +395,6 @@ document.getElementById('resetBtn').addEventListener('click', () => {
 
   // Restart CSV reading and 3D orientation animation from the beginning
   startPlotting();
-  readCSVAndAnimate(); // Restart animation from the beginning
 });
 
 SIM_E.addEventListener('click', simulation_e);
@@ -463,25 +410,16 @@ commandInput.addEventListener('keydown', (event) => {
     }
 });
 
-executeCommandButton.addEventListener('click', async () => {
+executeCommandButton.addEventListener('click', () => {
     const command = commandInput.value.trim();
     handleCommand(command);
     commandInput.value = ''; 
 
-    try {
-        const response = await fetch(`/log-cmnd?command=${encodeURIComponent(command)}`, {
-            method: 'POST'
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to log the command');
-        }
-
-        console.log('Command logged successfully');
-    } catch (error) {
-        console.error('Error logging the command:', error);
-    }
+    // Send the command to the backend via socket
+    socket.emit('cmnd', command);
 });
+
+
 
 function handleCommand(command) {
     let response = '';
@@ -495,7 +433,6 @@ function handleCommand(command) {
     displayCommandOutput(response);
 }
 
-
 function displayCommandOutput(text) {
   const commandOutput = document.getElementById('commandOutput');
   const newCommand = document.createElement('div');
@@ -505,121 +442,150 @@ function displayCommandOutput(text) {
   commandOutput.scrollTop = commandOutput.scrollHeight;
 }
 
+// Create a scene
+const scene = new THREE.Scene();
 
-    // Create a scene
-    const scene = new THREE.Scene();
+// Create a camera
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 5;
 
-    // Create a camera
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 5;
+// Create a renderer
+const renderer = new THREE.WebGLRenderer();
+const orientationDiv = document.getElementById('orientation');
+renderer.setSize(orientationDiv.clientWidth, orientationDiv.clientHeight);
+orientationDiv.appendChild(renderer.domElement);
 
-    // Create a renderer
-    const renderer = new THREE.WebGLRenderer();
-    const orientationDiv = document.getElementById('orientation');
-    renderer.setSize(orientationDiv.clientWidth, orientationDiv.clientHeight);
-    orientationDiv.appendChild(renderer.domElement);
+// Handle window resize
+window.addEventListener('resize', () => {
+    const width = orientationDiv.clientWidth;
+    const height = orientationDiv.clientHeight;
+    renderer.setSize(width, height);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+});
 
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        const width = orientationDiv.clientWidth;
-        const height = orientationDiv.clientHeight;
-        renderer.setSize(width, height);
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-    });
+// Create materials for the sides, top, and bottom with better colors
+const sideMaterial = new THREE.MeshStandardMaterial({ color: 0x3498db }); // Blue
+const topMaterial = new THREE.MeshStandardMaterial({ color: 0xe74c3c }); // Red
+const bottomMaterial = new THREE.MeshStandardMaterial({ color: 0x2ecc71 }); // Green
 
-    // Create materials for the sides, top, and bottom with better colors
-    const sideMaterial = new THREE.MeshStandardMaterial({ color: 0x3498db }); // Blue
-    const topMaterial = new THREE.MeshStandardMaterial({ color: 0xe74c3c }); // Red
-    const bottomMaterial = new THREE.MeshStandardMaterial({ color: 0x2ecc71 }); // Green
+// Create a cuboid to represent the CanSat with higher resolution
+const geometry = new THREE.BoxGeometry(1, 2, 1, 10, 10, 10); // Increase segments for higher resolution
+const materials = [sideMaterial, sideMaterial, topMaterial, bottomMaterial, sideMaterial, sideMaterial];
+const cansat = new THREE.Mesh(geometry, materials);
+scene.add(cansat);
 
-    // Create a cuboid to represent the CanSat with higher resolution
-    const geometry = new THREE.BoxGeometry(1, 2, 1, 10, 10, 10); // Increase segments for higher resolution
-    const materials = [sideMaterial, sideMaterial, topMaterial, bottomMaterial, sideMaterial, sideMaterial];
-    const cansat = new THREE.Mesh(geometry, materials);
-    scene.add(cansat);
+// Add a directional light source
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+directionalLight.position.set(5, 5, 5).normalize();
+scene.add(directionalLight);
 
-    // Add a directional light source
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-    directionalLight.position.set(5, 5, 5).normalize();
-    scene.add(directionalLight);
+// Add an ambient light source
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
 
-    // Add an ambient light source
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
+// Add axes helper
+const axesHelper = new THREE.AxesHelper(3);
+scene.add(axesHelper);
 
-    // Add axes helper
-    const axesHelper = new THREE.AxesHelper(3);
-    scene.add(axesHelper);
+// Function to animate the CanSat
+function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+}
 
-    // Function to animate the CanSat
-    function animate() {
-        requestAnimationFrame(animate);
-        renderer.render(scene, camera);
-    }
+// Function to update CanSat rotation based on tilt values
+function updateCanSatRotation(tiltX, tiltY, rotZ) {
+    cansat.rotation.x = tiltX; 
+    cansat.rotation.y = tiltY;
+    cansat.rotation.z = rotZ;
+}
 
-    // Function to update CanSat rotation based on tilt values
-    function updateCanSatRotation(tiltX, tiltY, rotZ) {
-        cansat.rotation.x = tiltX; 
-        cansat.rotation.y = tiltY;
-        cansat.rotation.z = rotZ;
-    }
+animate();
 
-    // Read CSV data and update CanSat rotation
-    let currentIndex = 0;
-    let intervalId = null; 
-    
-    // Function to read CSV and animate
-    async function readCSVAndAnimate() {
-      try {
-        const response = await fetch('/data');
-        if (!response.ok) {
-          throw new Error('Failed to fetch JSON data for 3D orientation');
-        }
-        const data = await response.json();
-        // Extract tilt and rotation arrays
-        const tiltXData = data.tiltx;
-        const tiltYData = data.tilty;
-        const rotZData = data.gyroArr;
-        // Ensure interval is cleared before starting
-        if (intervalId !== null) {
-          clearInterval(intervalId);
-        }
-        currentIndex = 0;
-        intervalId = setInterval(() => {
-          if (currentIndex < tiltXData.length) {
-            const tiltX = tiltXData[currentIndex];
-            const tiltY = tiltYData[currentIndex];
-            const rotZ = rotZData[currentIndex];
-            updateCanSatRotation(tiltX, tiltY, rotZ);
-            currentIndex++;
-          } else {
-            clearInterval(intervalId);
-          }
-        }, 1000);
-      } catch (error) {
-        console.error('Error fetching 3D orientation data:', error);
-      }
-    }
-    
-        // Function to start or resume 3D orientation
-        function start3DOrientation() {
-          if (intervalId === null) {
-            readCSVAndAnimate(); 
-          }
-        }
-    
-        // Function to pause 3D orientation
-        function pause3DOrientation() {
-          if (intervalId !== null) {
-            clearInterval(intervalId);
-            intervalId = null;
-          }
-        }
-    
-        // Event listeners for 3D orientation play/pause
-        document.getElementById('on').addEventListener('click', start3DOrientation);
-        document.getElementById('pauseBtn').addEventListener('click', pause3DOrientation);
-        document.getElementById('resumeBtn').addEventListener('click', start3DOrientation);
+socket.on('data', (data) => {
+  // Populate arrays with received data
+  altarr.push(data.alt);
+  spdarr.push(data.spd);
+  vltarr.push(data.vlt);
+  prearr.push(data.pre);
+  latarr.push(data.lat);
+  longarr.push(data.long);
+  satsarr.push(data.sats);
+  statearr.push(data.state);
+  timearr.push(data.time);
+  packet_arr.push(data.packet);
+  tiltx.push(data.tiltx);
+  tilty.push(data.tilty);
+  tempArr.push(data.temp);
+  gyroArr.push(data.gyro);
+  teamIdArr.push(data.teamId);
+  modeArr.push(data.mode);
+  hsDeployedArr.push(data.hsDeployed);
+  pcDeployedArr.push(data.pcDeployed);
+  gpsTimeArr.push(data.gpsTime);
+  gpsAltitudeArr.push(data.gpsAltitude);
+  cmdEchoArr.push(data.cmdEcho);
 
-    animate();
+  // Update UI elements
+  alt.textContent = data.alt + "m";
+  pre.textContent = data.pre + "bar";
+  vlt.textContent = data.vlt + "V";
+  lat.textContent = data.lat + "°";
+  long.textContent = data.long + "°";
+  sp.textContent = data.spd + "m/s";
+  sats.textContent = data.sats;
+  state.textContent = stateconv(data.state);
+  time.textContent = "Mission Time: \n" + data.time;
+  packets.textContent = "Packet Count: \n" + data.packet;
+  tilt.textContent = `${data.tiltx}° , ${data.tilty}°`;
+  cmd_echo.textContent = data.cmdEcho;
+  team_id.textContent = data.teamId;
+  marker.setLatLng([data.lat, data.long]);
+  polyline.addLatLng([data.lat, data.long]);
+
+  // Update Plotly graphs
+  Plotly.extendTraces('Altitude', { y: [[data.alt]] }, [0]);
+  Plotly.extendTraces('Pressure', { y: [[data.pre]] }, [0]);
+  Plotly.extendTraces('Temperature', { y: [[data.temp]] }, [0]);
+  Plotly.extendTraces('Gyro_Spin_Rate', { y: [[data.gyro]] }, [0]);
+  Plotly.extendTraces('Voltage', { y: [[data.vlt]] }, [0]);
+  Plotly.extendTraces('trajectory-plot', {
+    x: [[data.long]],
+    y: [[data.lat]],
+    z: [[data.alt]]
+  }, [0]);
+
+  // Add a new row to the table
+  const tableBody = document.getElementById('csvTable').getElementsByTagName('tbody')[0];
+  const newRow = tableBody.insertRow();
+  newRow.insertCell().textContent = data.teamId;
+  newRow.insertCell().textContent = data.time;
+  newRow.insertCell().textContent = data.packet;
+  newRow.insertCell().textContent = data.mode;
+  newRow.insertCell().textContent = data.state;
+  newRow.insertCell().textContent = data.alt;
+  newRow.insertCell().textContent = data.spd;
+  newRow.insertCell().textContent = data.hsDeployed;
+  newRow.insertCell().textContent = data.pcDeployed;
+  newRow.insertCell().textContent = data.temp;
+  newRow.insertCell().textContent = data.vlt;
+  newRow.insertCell().textContent = data.pre;
+  newRow.insertCell().textContent = data.gpsTime;
+  newRow.insertCell().textContent = data.gpsAltitude;
+  newRow.insertCell().textContent = data.lat;
+  newRow.insertCell().textContent = data.long;
+  newRow.insertCell().textContent = data.sats;
+  newRow.insertCell().textContent = data.tiltx;
+  newRow.insertCell().textContent = data.tilty;
+  newRow.insertCell().textContent = data.gyro;
+  newRow.insertCell().textContent = data.cmdEcho;
+
+  // Update 3D model rotation
+  updateCanSatRotation(data.tiltx, data.tilty, data.gyro);
+});
+
+socket.on('cmnd', (data) => {
+  displayCommandOutput(data);
+});
+
