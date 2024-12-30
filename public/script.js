@@ -16,31 +16,8 @@ const tilt = document.getElementById("tilt");
 const cmd_echo = document.getElementById("CMD_ECHO");
 const team_id = document.getElementById("team_id");
 
-const altarr = [];
-const prearr = [];
-const latarr = [];
-const longarr = [];
-const spdarr = [];
-const vltarr = [];
-const satsarr = [];
-const statearr = [];
-const timearr = [];
-const packet_arr = [];
-const tiltx = [];
-const tilty = [];
-const tempArr = [];
-const gyroArr = [];
-const teamIdArr = [];
-const modeArr = [];
-const hsDeployedArr = [];
-const pcDeployedArr = [];
-const gpsTimeArr = [];
-const gpsAltitudeArr = [];
-const cmdEchoArr = [];
-
 // Socket.io client-side code
 const socket = io();
-
 
 const map = L.map('map').setView([19.2105, 72.8242], 15);
 let marker = L.marker([19.2105, 72.8242]).addTo(map);
@@ -81,7 +58,6 @@ function stateconv(a) {
     document.getElementById('aerobrake').classList.add("boxhighlighted");
     return "AEROBRAKE_R";
   } else if (a == 8) {
-
     document.getElementById('aerobrake').classList.remove("boxhighlighted");
     document.getElementById('impact').classList.add("boxhighlighted");
     return "IMPACT";
@@ -104,31 +80,28 @@ const tblcont = document.getElementById("csv-ka-data");
 const pagecont = document.getElementById("not-csv-ka-data");
 
 function csvtable() {
-
   pagecont.style.display="none";
   tblcont.style.display="block";
-
 }
 
 function home() {
-
-    tblcont.style.display="none";
-    pagecont.style.display="block";
-    window.scrollTo(0, 0);
+  tblcont.style.display="none";
+  pagecont.style.display="block";
+  window.scrollTo(0, 0);
 }
 
 function graph() {
-
-    tblcont.style.display="none";
-    pagecont.style.display="block";
-    document.getElementById("graph_container_123").scrollIntoView();
-    window.scrollBy(0, -110);
+  tblcont.style.display="none";
+  pagecont.style.display="block";
+  document.getElementById("graph_container_123").scrollIntoView();
+  window.scrollBy(0, -110);
 }
 
 // Add event listeners for buttons
 document.getElementById('homeBtn').addEventListener('click', home);
 document.getElementById('graphBtn').addEventListener('click', graph);
 document.getElementById('csvBtn').addEventListener('click', csvtable);
+
 // Initializing Plotly Data Structures
 let altData = [{
   y: [],
@@ -202,10 +175,7 @@ Plotly.newPlot('trajectory-plot', trajectoryData, trajectoryLayout);
 
 let cnt = 0;
 let interval = null;
-async function fetchData() {
-  // No need to fetch data via API request
-  // Data will be received via socket
-}
+let currentIndex = 0;
 
 function plotTrajectory() {
   if (cnt < altarr.length) {
@@ -270,7 +240,6 @@ function plotTrajectory() {
 }
 
 async function startPlotting() {
-  // No need to fetch data via API request
   interval = setInterval(plotTrajectory, 1000); 
 }
 
@@ -297,41 +266,15 @@ document.getElementById('resumeBtn').addEventListener('click', () => {
   }
 });
 
-
 // Reset the sim
 document.getElementById('resetBtn').addEventListener('click', () => {
-  socket.emit('reset');
-  // Clear the interval
   clearInterval(interval);
   interval = null;
 
   // Reset the index for reading CSV
   currentIndex = 0;
 
-  // Clear all data arrays
-  altarr.length = 0;
-  prearr.length = 0;
-  latarr.length = 0;
-  longarr.length = 0;
-  spdarr.length = 0;
-  vltarr.length = 0;
-  satsarr.length = 0;
-  statearr.length = 0;
-  timearr.length = 0;
-  packet_arr.length = 0;
-  tiltx.length = 0;
-  tilty.length = 0;
-  tempArr.length = 0;
-  gyroArr.length = 0;
-  teamIdArr.length = 0;
-  modeArr.length = 0;
-  hsDeployedArr.length = 0;
-  pcDeployedArr.length = 0;
-  gpsTimeArr.length = 0;
-  gpsAltitudeArr.length = 0;
-  cmdEchoArr.length = 0;
-
-  // Clear Plotly data arrays
+  // Reset Plotly data arrays
   altData[0].y.length = 0;
   preData[0].y.length = 0;
   tempData[0].y.length = 0;
@@ -393,8 +336,8 @@ document.getElementById('resetBtn').addEventListener('click', () => {
 
   cmd_echo.textContent = "⠀";
 
-  // Restart CSV reading and 3D orientation animation from the beginning
-  startPlotting();
+  // Send the reset event to the server
+  socket.emit('reset');
 });
 
 SIM_E.addEventListener('click', simulation_e);
@@ -418,8 +361,6 @@ executeCommandButton.addEventListener('click', () => {
     // Send the command to the backend via socket
     socket.emit('cmnd', command);
 });
-
-
 
 function handleCommand(command) {
     let response = '';
@@ -504,29 +445,6 @@ function updateCanSatRotation(tiltX, tiltY, rotZ) {
 animate();
 
 socket.on('data', (data) => {
-  // Populate arrays with received data
-  altarr.push(data.alt);
-  spdarr.push(data.spd);
-  vltarr.push(data.vlt);
-  prearr.push(data.pre);
-  latarr.push(data.lat);
-  longarr.push(data.long);
-  satsarr.push(data.sats);
-  statearr.push(data.state);
-  timearr.push(data.time);
-  packet_arr.push(data.packet);
-  tiltx.push(data.tiltx);
-  tilty.push(data.tilty);
-  tempArr.push(data.temp);
-  gyroArr.push(data.gyro);
-  teamIdArr.push(data.teamId);
-  modeArr.push(data.mode);
-  hsDeployedArr.push(data.hsDeployed);
-  pcDeployedArr.push(data.pcDeployed);
-  gpsTimeArr.push(data.gpsTime);
-  gpsAltitudeArr.push(data.gpsAltitude);
-  cmdEchoArr.push(data.cmdEcho);
-
   // Update UI elements
   alt.textContent = data.alt + "m";
   pre.textContent = data.pre + "bar";
@@ -580,7 +498,8 @@ socket.on('data', (data) => {
   newRow.insertCell().textContent = data.tilty;
   newRow.insertCell().textContent = data.gyro;
   newRow.insertCell().textContent = data.cmdEcho;
-
+  // Scroll to the bottom of the table
+  tableBody.scrollTop = tableBody.scrollHeight;
   // Update 3D model rotation
   updateCanSatRotation(data.tiltx, data.tilty, data.gyro);
 });

@@ -103,11 +103,16 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('reset', () => {
+  socket.on('reset', async () => {
     console.log('Reset command received');
+    timestamp = new Date().toISOString().replace(/:/g, '-');
     clearInterval(intervalId);
     intervalId = null;
     currentIndex = 0;
+    await readCSVData(); // Re-read the CSV so data restarts from the beginning
+    if (!intervalId) {
+      intervalId = setInterval(emitData, 1000);
+    }
   });
 });
 
