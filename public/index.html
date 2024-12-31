@@ -19,21 +19,25 @@
 </head>
 <body>
     <div class="heading_container">
-        <div class="teamdetails">
-            <img style="height: 98%;" src="https://media-exp1.licdn.com/dms/image/C4D0BAQH44RIzI8xEHg/company-logo_200_200/0/1579280652217?e=2159024400&v=beta&t=620Tzp0d3dPVRo4dApJREZbC5q5Pr_axDJrWCn6-Zlk" alt="team logo" class="logo">
-            <h1>DJS Arya</h1>
-            <h1 >Team ID:<span id="team_id">0000</span></h1>
-            <img src="https://media.istockphoto.com/id/519611160/vector/flag-of-india.jpg?s=612x612&w=0&k=20&c=0HueaQHkdGC4Fw87s3DbeTE9Orv3mqHRLce88LV47E4=" alt="indian flag" class="flag">
-        </div>
-        <div class="timer">
-            <h1 id="time">Mission Time: <br>00:00:00</h1>
-        </div>
-        <div class="packetcounter">
-            <h1 id="pack_count">Packet Count: 0</h1>
+        <div class="details">
+            <div class="teamdetails">
+                <img style="height: 98%;" src="https://media-exp1.licdn.com/dms/image/C4D0BAQH44RIzI8xEHg/company-logo_200_200/0/1579280652217?e=2159024400&v=beta&t=620Tzp0d3dPVRo4dApJREZbC5q5Pr_axDJrWCn6-Zlk" alt="team logo" class="logo">
+                <div class="id_name">
+                    <h1>DJS Arya</h1>
+                    <h1 >Team ID: 0000</h1>
+                </div>
+                <img src="https://media.istockphoto.com/id/519611160/vector/flag-of-india.jpg?s=612x612&w=0&k=20&c=0HueaQHkdGC4Fw87s3DbeTE9Orv3mqHRLce88LV47E4=" alt="indian flag" class="flag">
+            </div>
+            <div class="timer">
+                <h1 id="time">Mission Time: 00:00:00</h1>
+            </div>
+            <div class="packetcounter">
+                <h1 id="pack_count">Packet Count: 0</h1>
+            </div>
         </div>
         <div class="nav_cont"> 
             <div class="nav">
-                <a class='xyz'><img src="home.png" alt="home" class="homelogo" id="homeBtn"></a>
+                <a><img src="home.png" alt="home" class="homelogo" id="homeBtn"></a>
                 <a><img src="graph.png" alt="graph" class="homelogo" id="graphBtn"></a>
                 <a><img src="csv.png" alt="csv" class="homelogo" id="csvBtn"></a>
             </div>
@@ -41,104 +45,109 @@
     </div>
     
     <div class="test" id="not-csv-ka-data">
-        <div class="leftside_cont">
-            <div class="datapoints_container">
-                <div class="column1"> 
-                    <div class="datapoints">
-                        <h1 class="dataques">Mode:</h1>
-                        <div class="dataval">
-                            <h1  id="mode">FLIGHT</h1>
+        <div class="top_cont">
+            <div class="leftside_cont">
+                <div class="left_top">
+                    <div class="datapoints_container">
+                        <div class="column1"> 
+                            <div class="datapoints">
+                                <h1 class="dataques">Mode:</h1>
+                                <div class="dataval">
+                                    <h1  id="mode">FLIGHT</h1>
+                                </div>
+                            </div>
+                            <div class="datapoints" >
+                                <h1 class="dataques">GNSS SATS:</h1>
+                                <div class="dataval">
+                                    <h1 id="sats">0</h1>
+                                </div>
+                            </div>
+                            <div class="datapoints" >
+                                <h1 class="dataques">Command Echo:</h1>
+                                <div class="dataval">
+                                    <h1 id="CMD_ECHO">⠀</h1>
+                                </div>
+                            </div>
+                            <div class="datapoints" >
+                                <h1 class="dataques">Altitude:</h1>
+                                <div class="dataval">
+                                    <h1 id="altitude">0m</h1>
+                                </div>
+                            </div>
+                            <div class="datapoints" >
+                                <h1 class="dataques">Speed:</h1>
+                                <div class="dataval">
+                                    <h1 id="speed">0m/s</h1>
+                                </div>
+                            </div>
+                            <div class="datapoints" >
+                                <h1 class="dataques">Voltage:</h1>
+                                <div class="dataval">
+                                    <h1 id="volt">0V</h1>
+                                </div>
+                            </div>
+                            <div class="datapoints" >
+                                <h1 class="dataques">STATE:</h1>
+                                <div class="dataval">
+                                    <h1 id="state">Boot</h1>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="datapoints" >
-                        <h1 class="dataques">GNSS SATS:</h1>
-                        <div class="dataval">
-                            <h1 id="sats">0</h1>
-                        </div>
-                    </div>
-                    <div class="datapoints" >
-                        <h1 class="dataques">Command Echo:</h1>
-                        <div class="dataval">
-                            <h1 id="CMD_ECHO">⠀</h1>
-                        </div>
-                    </div>
-                    <div class="datapoints" >
-                        <h1 class="dataques">Altitude:</h1>
-                        <div class="dataval">
-                            <h1 id="altitude">0m</h1>
-                        </div>
-                    </div>
-                    <div class="datapoints" >
-                        <h1 class="dataques">Speed:</h1>
-                        <div class="dataval">
-                            <h1 id="speed">0m/s</h1>
-                        </div>
-                    </div>
-                    <div class="datapoints" >
-                        <h1 class="dataques">Voltage:</h1>
-                        <div class="dataval">
-                            <h1 id="volt">0V</h1>
-                        </div>
-                    </div>
-                    <div class="datapoints" >
-                        <h1 class="dataques">STATE:</h1>
-                        <div class="dataval">
-                            <h1 id="state">Boot</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="column2">
-                    <div class="datapoints" id="sim">
-                        <button id="s_enable" >SIM_ENABLE</button>
-                        <button id="s_disable">SIM_DISABLE</button>
-                    </div>
-                    <div class="datapoints" >
-                        <h1 class="dataques">Pressure:</h1>
-                        <div class="dataval">
-                            <h1 id="pressure">0bar</h1>
+                        <div class="column2">
+                            <div class="datapoints" id="sim">
+                                <button id="s_enable" >SIM_ENABLE</button>
+                                <button id="s_disable">SIM_DISABLE</button>
+                            </div>
+                            <div class="datapoints" >
+                                <h1 class="dataques">Pressure:</h1>
+                                <div class="dataval">
+                                    <h1 id="pressure">0bar</h1>
+                                </div>
+                            </div>  
+                            <div class="datapoints" >
+                                <h1 class="dataques">Gyno Spin:</h1>
+                                <div class="dataval">
+                                    <h1 id="GynoSpinRate">0m/s</h1>
+                                </div>
+                            </div>
+                            <div class="datapoints" >
+                                <h1 class="dataques">Latitude:</h1>
+                                <div class="dataval">
+                                    <h1 id="Lat">0°</h1>
+                                </div>
+                            </div>
+                            <div class="datapoints" >
+                                <h1 class="dataques">Longitude:</h1>
+                                <div class="dataval">
+                                    <h1 id="Long">0°</h1>
+                                </div>
+                            </div>
+                            <div class="datapoints" >
+                                <h1 class="dataques">TILT(X,Y):</h1>
+                                <div class="dataval">
+                                    <h1 id="tilt">(0°,0°)</h1>
+                                </div>
+                            </div>
+                            <div class="datapoints" id="landing_mech">
+                                <div class="status" id="pc_deploy">
+                                    <h1 >PC_Deployed</h1>
+                                </div>
+                                <div class="status" id="glider">
+                                    <h1 >GLIDER</h1>
+                                </div>
+                                
+                            </div>
                         </div>
                     </div>  
-                    <div class="datapoints" >
-                        <h1 class="dataques">Gyno Spin:</h1>
-                        <div class="dataval">
-                            <h1 id="GynoSpinRate">0m/s</h1>
+                    <div id="map&flow" style="height: 80vh; width: 60%;  z-index: 999; margin-top: 1%; display: flex; flex-direction: column;">
+                        <div class="map-cont" style="height: 100%;">
+                            <div id="map" style="height: 100%;"></div>
                         </div>
-                    </div>
-                    <div class="datapoints" >
-                        <h1 class="dataques">Latitude:</h1>
-                        <div class="dataval">
-                            <h1 id="Lat">0°</h1>
-                        </div>
-                    </div>
-                    <div class="datapoints" >
-                        <h1 class="dataques">Longitude:</h1>
-                        <div class="dataval">
-                            <h1 id="Long">0°</h1>
-                        </div>
-                    </div>
-                    <div class="datapoints" >
-                        <h1 class="dataques">TILT(X,Y):</h1>
-                        <div class="dataval">
-                            <h1 id="tilt">(0°,0°)</h1>
-                        </div>
-                    </div>
-                    <div class="datapoints" id="landing_mech">
-                        <div class="status" id="pc_deploy">
-                            <h1 >PC_Deployed</h1>
-                        </div>
-                        <div class="status" id="glider">
-                            <h1 >GLIDER</h1>
-                        </div>
-                        
                     </div>
                 </div>
-                
-                <div id="map&flow" style="height: 80vh; width: 45%;  z-index: 999; margin-top: 1%; display: flex; flex-direction: column;">
-                    <div class="map-cont" style="height: 100%;">
-                        <div id="map" style="height: 100%;"></div>
-                    </div>
+                <div class="left_bottom">
                     <div class="flowchart">
-                        <div class="" style="display: flex;">
+                        <div class="" style="display: flex; justify-content: space-evenly; padding-bottom: 1rem;">
                             <div class="box" id="boot">Boot</div>
                             <div class="box" id="test">TEST MODE</div>
                             <div class="box" id="launch">LAUNCH PAD</div>
@@ -150,38 +159,35 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="right_side_cont">
-                    <div class="efg">
-                        <div class="button_cont">
-                            <a href="#home"><img src="on.png" alt="on" id="on" class="clickclick"></a>
-                            <a href="#home"><img src="reset.png" alt="reset" id="resetBtn" class="clickclick"></a>
-                            <a href="#home"><img src="pau.png" alt="pause" id="pauseBtn" class="clickclick"></a>
-                            <a href="#home"><img src="play.png" alt="play" id="resumeBtn" class="clickclick"></a>
-                        </div>
+            </div>  
+            <div class="right_side_cont">
+                <div class="efg">
+                    <div class="button_cont">
+                        <a href="#home"><img src="on.png" alt="on" id="on" class="clickclick"></a>
+                        <a href="#home"><img src="reset.png" alt="reset" id="resetBtn" class="clickclick"></a>
+                        <a href="#home"><img src="pau.png" alt="pause" id="pauseBtn" class="clickclick"></a>
+                        <a href="#home"><img src="play.png" alt="play" id="resumeBtn" class="clickclick"></a>
                     </div>
-                    <div id="command-interface">
-                        <div style="background-color: #73A5DB; padding: 10px; border-radius: 10px; width: 100%; margin: 0;  ">
-                            <div id="command-history">
-                                <div id="commandOutput" class="command-output" style="height: 100px; overflow-y: auto;"></div>
-                            </div>
-                            <div id="command-input">
-                                <input type="text" id="inputcommand" placeholder="Command..." autocomplete="off">
-                                <button id="executeCommand" >Execute</button>
-                            </div>
-                            <div class="3d_Graph_container" style="height: 100%;">
-                                <h1>3D Graph</h1>
-                                <div class="graph" id="myPlot" style="height: 100%;">
-                                    <div id="trajectory-plot" style="width: 100%; height: 100%;"></div>
-                        
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
-            </div>
-            
+                <div id="command-interface">
+                    <div style="background-color: #73A5DB; padding: 10px; border-radius: 10px; width: 100%; margin: 0;  ">
+                        <div id="command-history">
+                            <div id="commandOutput" class="command-output" style="height: 100px; overflow-y: auto;"></div>
+                        </div>
+                        <div id="command-input">
+                            <input type="text" id="inputcommand" placeholder="Command..." autocomplete="off">
+                            <button id="executeCommand" >Execute</button>
+                        </div>
+                        <div class="3d_Graph_container" style="height: 100%;">
+                            <h1>3D Graph</h1>
+                            <div class="graph" id="myPlot" style="height: 100%;">
+                                <div id="trajectory-plot" style="width: 100%; height: 100%;"></div>
+                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>    
         </div>
         <div class="graph_container" id="graph_container_123">
             <div class="g_column1">

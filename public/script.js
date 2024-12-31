@@ -1,3 +1,6 @@
+document.addEventListener('DOMContentLoaded',()=>{
+  
+})
 const SIM_E = document.getElementById("s_enable");
 const SIM_D = document.getElementById("s_disable");
 const mode = document.getElementById("mode");
@@ -112,25 +115,25 @@ let altData = [{
 let preData = [{
   y: [],
   mode: 'lines',
-  line: { color: 'rgb(0,139,0)' }
+  line: { color: 'rgb(139,0,0)' }
 }];
 
 let tempData = [{
   y: [],
   mode: 'lines',
-  line: { color: 'rgb(0,0,139)' }
+  line: {color: 'rgb(139,0,0)' }
 }];
 
 let gyroData = [{
   y: [],
   mode: 'lines',
-  line: { color: 'rgb(139,139,0)' }
+  line: { color: 'rgb(139,0,0)' }
 }];
 
 let voltData = [{
   y: [],
   mode: 'lines',
-  line: { color: 'rgb(139,0,139)' }
+  line: { color: 'rgb(139,0,0)' }
 }];
 
 function createLayout(yAxisTitle) {
@@ -199,8 +202,8 @@ function plotTrajectory() {
     sp.textContent = spdarr[cnt] + "m/s";
     sats.textContent = satsarr[cnt];
     state.textContent = stateconv(statearr[cnt]);
-    time.textContent = "Mission Time: \n" + timearr[cnt];
-    packets.textContent = "Packet Count: \n" + packet_arr[cnt];
+    time.textContent = "Mission Time: " + timearr[cnt];
+    packets.textContent = "Packet Count: " + packet_arr[cnt];
     tilt.textContent = `${tiltx[cnt]}° , ${tilty[cnt]}°`;
     cmd_echo.textContent = cmdEchoArr[cnt]; 
     team_id.textContent = teamIdArr[cnt];
@@ -454,11 +457,10 @@ socket.on('data', (data) => {
   sp.textContent = data.spd + "m/s";
   sats.textContent = data.sats;
   state.textContent = stateconv(data.state);
-  time.textContent = "Mission Time: \n" + data.time;
-  packets.textContent = "Packet Count: \n" + data.packet;
+  time.textContent = "Mission Time: " + data.time;
+  packets.textContent = "Packet Count: " + data.packet;
   tilt.textContent = `${data.tiltx}° , ${data.tilty}°`;
   cmd_echo.textContent = data.cmdEcho;
-  team_id.textContent = data.teamId;
   marker.setLatLng([data.lat, data.long]);
   polyline.addLatLng([data.lat, data.long]);
 

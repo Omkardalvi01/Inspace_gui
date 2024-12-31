@@ -25,27 +25,31 @@ body {
     /* background: linear-gradient(135deg, #d6ddfd, #CAD1FD); */
     background-color: #CBD2FC;
     padding-bottom: 0.6rem;
-    font-size: 1.2em;
+    font-size: 1.1rem;
     z-index: 1000;
     padding-right: 1%;
 }
-
-.teamdetails {
+.id_name{
     display: flex;
-    width: 44%;
-    height: 10vh;
-    background-color: #478CCF;
-    border-radius: 15px;
     justify-content: space-between;
+    width: 60%;
+    text-align: center;
+    align-items: center;
+}
+.teamdetails {
+    text-align: center;
+    display: flex;
+    width: 55%;
+    height: 8vh;
+    justify-content: space-between;
+    align-content: center;
     padding: 0 3%;
 }
 
 .timer, .packetcounter {
     text-align: center;
-    border-radius: 15px;
-    height: 10vh;
-    width: 17%;
-    background-color: #478CCF;
+    height: 8vh;
+    width: 30%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -61,7 +65,7 @@ body {
 .nav {
     padding: 0;
     background-color: #478CCF;
-    height: 10vh;
+    height: 8vh;
     border-radius: 15px;
     width: 100%;
     margin: 0;
@@ -69,26 +73,35 @@ body {
     flex-direction: row;
     justify-content: space-around;
 }
-
+.top_cont{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 .logo {
     border-radius: 0%;
 }
 
 .leftside_cont {
-    width: 100%;
+    width: 75%;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
 }
-
-.datapoints_container {
+.left_top{
     width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 0;
+    margin: 0;
+}
+.datapoints_container {
+    width: 40%;
     height: auto;
     display: flex;
     justify-content: space-evenly;
-    flex-wrap: wrap;
 }
 
 .datapoints {
@@ -147,38 +160,46 @@ body {
 }
 
 .flowchart {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     background-color: #73A5DB;
     padding: 5px;
     border-radius: 10px;
-    margin-top: 10px;
-    width: 100%;
+    margin-top: 5px;
+    width: 99.5%;
+    height: 80%;
 }
-
-.box {
+.left_bottom{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: right;
+    margin-left: 0.8rem;
+}
+.box {
     background-color: #fdfbd4;
     color: black;
     font-size: 1.2em;
-    width: auto;
-    height: auto;
-    padding: 10px;
     border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    margin: 5px;
+    height: 6vh;
+    width: 17.5%;
+    margin: 1px 5px;
 }
 
 .boxhighlighted {
     color: white;
     background-color: #2c8a2c;
 }
-
+.details {
+    display: flex;
+    flex-direction: row;
+    background-color: #478CCF;
+    width: 80%;
+    border-radius: 15px;
+    justify-content: space-around;
+}
 .test {
-    padding-top: 4em;
+    padding-top: 2.8em;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -208,10 +229,12 @@ body {
     height: 50vh;
     background-color: #FFFFFF;
     z-index: 1;
+    color: red;
 }
 
 .right_side_cont {
     margin-top: 1em;
+    width: 24%;
     display: flex;
     flex-direction: column;
 }
@@ -241,7 +264,7 @@ body {
 }
 
 .homelogo {
-    height: 8vh;
+    height: 6.2vh;
     width: 4vw;
     margin: 1vh 1vb;
     background-color: #478CCF;
