@@ -53,16 +53,6 @@ const Server = http.createServer(app);
 
 const io = socket(Server);
 
-app.get('/data', async (req, res) => {
-  try {
-    res.setHeader('Content-Type', 'application/json');
-    res.json(csvData);  // Send the CSV data as JSON to the client
-  } catch (error) {
-    console.error('Error reading CSV file:', error);
-    res.status(500).send('Error reading CSV file');
-  }
-});
-
 Server.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

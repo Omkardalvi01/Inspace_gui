@@ -85,6 +85,8 @@ const pagecont = document.getElementById("not-csv-ka-data");
 function csvtable() {
   pagecont.style.display="none";
   tblcont.style.display="block";
+  // Auto-scroll to the bottom of the page
+  window.scrollTo(0, document.body.scrollHeight);
 }
 
 function home() {
@@ -235,6 +237,11 @@ function plotTrajectory() {
     newRow.insertCell().textContent = tilty[cnt];
     newRow.insertCell().textContent = gyroArr[cnt];
     newRow.insertCell().textContent = cmdEchoArr[cnt];
+
+    // Auto-scroll to the bottom of the page if CSV table is visible
+    if (tblcont.style.display === "block") {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
 
     cnt++;
   } else {
@@ -500,8 +507,12 @@ socket.on('data', (data) => {
   newRow.insertCell().textContent = data.tilty;
   newRow.insertCell().textContent = data.gyro;
   newRow.insertCell().textContent = data.cmdEcho;
-  // Scroll to the bottom of the table
-  tableBody.scrollTop = tableBody.scrollHeight;
+
+  // Auto-scroll to the bottom of the page if CSV table is visible
+  if (tblcont.style.display === "block") {
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
   // Update 3D model rotation
   updateCanSatRotation(data.tiltx, data.tilty, data.gyro);
 });
