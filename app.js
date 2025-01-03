@@ -6,6 +6,13 @@ const port = 3000;
 const socket = require('socket.io');
 const http = require('http');
 
+let inp_file_path = path.join(__dirname, 'input/test.csv');
+let output_dir = path.join(__dirname, 'output');
+
+if (!fs.existsSync(output_dir)) {
+  fs.mkdirSync(output_dir);
+}
+
 let csvData = {
     altarr: [],
     spdarr: [],
@@ -35,7 +42,7 @@ let timestamp = ""; // Generate timestamp
 
 async function readCSVData() {
     try {
-      const filePath = path.join(__dirname, '/public/test.csv'); 
+      const filePath = inp_file_path;
       const data = fs.readFileSync(filePath, 'utf-8');  
       rows = data.split('\n').slice(1);  
       console.log('CSV Data Loaded Successfully');
@@ -141,7 +148,7 @@ function emitData() {
 
     io.emit('data', data);
 
-    const outputFilePath = path.join(__dirname, `/public/${timestamp}.csv`);
+    const outputFilePath = path.join(output_dir, `${timestamp}.csv`);
     const header = 'team_id,mission_time,packet_count,mode,state_value,altitude,air_speed,hs_deployed,pc_deployed,temperature,voltage,pressure,gps_time,gps_altitude,latitude,longitude,gps_sats,tilt_x,tilt_y,rot_z,cmd_echo\n';
     if (currentIndex === 0) {
       fs.writeFileSync(outputFilePath, header);
