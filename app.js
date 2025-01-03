@@ -100,6 +100,7 @@ io.on('connection', (socket) => {
     intervalId = null;
     currentIndex = 0;
     await readCSVData(); // Re-read the CSV so data restarts from the beginning
+    io.emit('resetAll');
     if (!intervalId) {
       intervalId = setInterval(emitData, 1000);
     }

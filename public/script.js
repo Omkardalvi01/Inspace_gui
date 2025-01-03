@@ -276,8 +276,7 @@ document.getElementById('resumeBtn').addEventListener('click', () => {
   }
 });
 
-// Reset the sim
-document.getElementById('resetBtn').addEventListener('click', () => {
+function doReset() {
   clearInterval(interval);
   interval = null;
 
@@ -345,9 +344,14 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   cnt = 0;
 
   cmd_echo.textContent = "⠀";
+}
 
-  // Send the reset event to the server
+document.getElementById('resetBtn').addEventListener('click', () => {
   socket.emit('reset');
+});
+
+socket.on('resetAll', () => {
+  doReset();
 });
 
 SIM_E.addEventListener('click', simulation_e);
