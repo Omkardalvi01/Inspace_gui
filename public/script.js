@@ -99,7 +99,7 @@ function graph() {
   tblcont.style.display="none";
   pagecont.style.display="block";
   document.getElementById("graph_container_123").scrollIntoView();
-  window.scrollBy(0, -110);
+  window.scrollBy(0, -90);
 }
 
 // Add event listeners for buttons

@@ -266,15 +266,16 @@ body {
 }
 
 .homelogo {
-    height: 6.2vh;
-    width: 4vw;
+    height: 6vh;
+    width: 6vh;
     margin: 1vh 1vb;
     background-color: #478CCF;
 }
 
 .homelogo:hover {
     cursor: pointer;
-    transform: scale(1.1);
+    /* transform: scale(1.1); */
+    animation: scale 0.07s 1 forwards;
 }
 
 .clickclick {
@@ -289,7 +290,22 @@ body {
 
 .clickclick:hover {
     cursor: pointer;
-    transform: scale(1.1);
+    /* transform: scale(1.1);
+     */
+    animation: scale 0.07s 1 forwards;
+}
+
+@keyframes scale {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1.1);
+    }
+    
 }
 
 #command-interface {
